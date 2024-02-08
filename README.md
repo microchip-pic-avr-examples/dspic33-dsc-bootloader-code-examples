@@ -35,27 +35,27 @@ Demonstrates the following:
 
 ## Setup
 ##### Hardware Setup
-1) Connect the micro-USB cable to port J1 of the dsPIC33 Touch-CAN-LIN Curiosity Development Board to the host computer.
+1. Connect the micro-USB cable to port J1 of the dsPIC33 Touch-CAN-LIN Curiosity Development Board to the host computer.
 
 ##### MPLAB® X IDE Setup
-1) Open the boot.X project in MPLAB® X IDE
-2) Build and program the device
-3) Open the app.X project in MPLAB® X IDE
-4) Build (do not program) the device
+1. Open the boot.X project in MPLAB® X IDE
+2. Build and program the device
+3. Open the app.X project in MPLAB® X IDE
+4. Build (do not program) the device
 
 ##### Universal Bootloader Host Application Setup
-1) Under Device Architecture, select PIC24 MCUs\dsPIC33 DSCs
-2) Under Protocol, select CAN 
-3) Go to Settings and select CAN from the dropdown to open the CAN Settings window 
-4) Verify the CAN Module is present under the CAN Module dropdown 
-5) Check the CAN-FD checkbox
-6) Check the Data Bit Rate Enable box
-7) Set the data bitrate to 2.00 Mbits/s if it is not set to it by default
-8) Click Apply
-9) Go to File and select Open/Load File (*.hex)
-10) Navigate to the app.X project and select the .hex file under dist --> default --> production
-11) Click "Read Device Settings"
-12) Click "Program Device"
+1. Under Device Architecture, select PIC24 MCUs\dsPIC33 DSCs
+2.  Under Protocol, select CAN 
+3.  Go to Settings and select CAN from the dropdown to open the CAN Settings window 
+4.  Verify the CAN Module is present under the CAN Module dropdown 
+5. Check the CAN-FD checkbox
+6. Check the Data Bit Rate Enable box
+7. Set the data bitrate to 2.00 Mbits/s if it is not set to it by default
+8. Click Apply
+9. Go to File and select Open/Load File (*.hex)
+10. Navigate to the app.X project and select the .hex file under dist --> default --> production
+11. Click "Read Device Settings"
+12. Click "Program Device"
 
 ## Operation
 
