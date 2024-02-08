@@ -4,7 +4,7 @@
     <img alt="Microchip Logo." src="images/microchip_logo_black_red.png">
 </picture>
 
-## %repoDescritpion%
+## dspic33 dsc bootloader code examples
 
 Board Image if any.
 
