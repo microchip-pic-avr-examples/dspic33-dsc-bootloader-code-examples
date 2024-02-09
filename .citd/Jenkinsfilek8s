@@ -74,7 +74,9 @@ pipeline {
             steps {
                 script {                    
                     mplabxProjectConfigUpdate(
-                        sourceFilePath: "${env.MPLABX_PROJECT_SOURCE}"
+                        sourceFilePath: "${env.MPLABX_PROJECT_SOURCE}",
+						dfpUpdate: false,
+						dfpInternal: false
                     )
                 }
             }
