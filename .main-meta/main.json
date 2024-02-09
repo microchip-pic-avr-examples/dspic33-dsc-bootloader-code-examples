@@ -5,9 +5,9 @@
       "metaDataVersion": "1.3.0",
       "name": "com.microchip.mplabx.project.dspic33-dsc-bootloader-code-examples",
       "version": "1.0.0",
-      "displayName": "CAN-FD Secure Boot and Secure Firmware Upgrade Demo",
+      "displayName": "dsPIC33 DSC Bootloader Code Examples",
       "projectName": "dspic33-dsc-bootloader-code-examples",
-      "shortDescription": "This MPLAB® X IDE example demonstrates how to perform secure boot authentication and update via CAN-FD with ECDSA signature verification within MCC Melody.",
+      "shortDescription": "dsPIC33 DSC Bootloader Code Examples",
       "ide": {
          "name": "MPLABX",
          "semverRange": ">=6.15.0"
@@ -35,38 +35,8 @@
          }
       },
       "keywords": [
-         "Secure Bootloader",
-         "Secure Firmware Upgrade",
-         "Bootloader",
-         "CAN FD",
-         "Immutable Boot",
-         "CodeGuard Security",
-         "Firmware Upgrade",
-         "Security",
-         "Cryptography",
-         "Public-key Cryptography",
-         "CryptoAuthentication",
-         "Authentication",
-         "Microchip Device Firmware Update",
-         "Certificate",
-         "SHA",
-         "SHA-256",
-         "Public Key",
-         "HSM",
-         "Getting Started",
-         "MCC",
-         "XC16",
-         "XC-DSC",
-         "Private Key",
-         "Code Protection",
-         "TA100",
-         "dsPIC",
-         "DSC",
-         "Over-the-Air Upgrade",
-         "Automotive",
-         "Hardware Security Module",
-         "Flash OTP",
-         "One-Time Programmable"
+         "GPIO", 
+         "UART"
       ]
    }
 }
