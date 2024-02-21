@@ -54,9 +54,9 @@ Demonstrates the following:
 ![Hardware Setup](./images/hardware_setup.png)
 
 #### Programming the Bootloader
-1. Open the boot.x project in MPLAB® X
-2. Copy and paste the TA100 support Cryptographic Authentication Library (CAL) into the mcc_generated_files folder replacing all placeholder files within
+1. Copy and paste the TA100 support Cryptographic Authentication Library (CAL) into the mcc_generated_files folder replacing all placeholder files within
 ![CAL Replacement](./images/cal_library.png)
+2. Open the boot.x project in MPLAB® X
 3. Press the “Make and Program” button on the top bar
 ![Make and Program Device](./images/make_and_program.png)
 4. Select the appropriate programmer if prompted
