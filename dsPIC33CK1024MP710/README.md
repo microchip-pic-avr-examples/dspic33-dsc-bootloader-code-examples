@@ -8,8 +8,8 @@
 
 ![Board picture](./images/board.jpg)
 
-## Summary
-Demonstrates the following: 
+## Introduction
+The associated bootloader and application projects demonstrate the following: 
 * Immutable secure boot via CodeGuard
 * A/B type bootloading with Flash partitioning to support two firmware images and anti-roll back
 * Secure boot authentication via ECDSA signature verification 
@@ -101,3 +101,7 @@ Demonstrates the following:
 9. Press “Program Device”. The application should program erase, program and perform a self verify using the TA100 for an ECDSA verify then read back verify correctly. Note: The reset response may not be fully transmitted before reset which may result in the reset response failing. The reset most likely did occur and the error can be safely ignored. 
     a. After a few seconds, LED11 should be blinking
 ![Program Device](./images/UBHA_Program.png)
+
+## Trademarks
+
+MPLAB® is a registered trademark of Microchip Technology Inc. All other trademarks are the property of their respective owner.
