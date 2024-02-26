@@ -54,14 +54,19 @@ The associated bootloader and application projects demonstrate the following:
 ![Hardware Setup](./images/hardware_setup.png)
 
 #### Programming the Bootloader
-1. Copy and paste the TA100 support Cryptographic Authentication Library (CAL) into the mcc_generated_files folder replacing all placeholder files within
-![CAL Replacement](./images/cal_library.png)
-2. Open the boot.x project in MPLAB® X
-3. Press the “Make and Program” button on the top bar
+1. Open the boot.X project in MPLAB® X
+2. Open MCC
+3. Right click on Project Resources and select "Force Update on All"
+![Force Update](./images/MCC_Force_Update.png)
+4. Click "Generate"
+![Generate](./images/MCC_Generate.png)
+5. Accept all incoming code changes by selecting "Replace All" in the merge helper UI
+![Merge Resolution](./images/MCC_Merge_Resolution.PNG)
+6. Press the “Make and Program” button on the top bar
 ![Make and Program Device](./images/make_and_program.png)
-4. Select the appropriate programmer if prompted
-5. The project should compile and program successfully
-6. Verify the LED11 is solid on the Development Board. This indicates the bootloader is running
+7. Select the appropriate programmer if prompted
+8. The project should compile and program successfully
+9. Verify the LED11 is solid on the Development Board. This indicates the bootloader is running
     a. If LED11 is blinking instead of solid, then the application code was programmed instead of only compiled. Go back to the “Programming the Bootloader” stage and re-program the bootloader
     
 #### Building the Application
