@@ -4,26 +4,17 @@
     <img alt="Microchip Logo." src="images/microchip_logo_black_red.png">
 </picture>
 
-## dspic33 dsc bootloader code examples
-
-Board Image if any.
+## dsPIC33 CAN/CAN-FD Bootloader Demo
 
 ## Summary
-
+An example bootloader using the 16-bit MCC bootloader and the CAN or CAN-FD peripheral. 
 
 ## Related Documentation
+https://www.microchip.com/16-bit-bootloader
 
+## Setup And Operation
 
-## Software Used 
-
-
-## Hardware Used
-
-
-## Setup
-
-
-## Operation
+See the README files associated with each folder that describe the required hardware, software, and setup instructions. 
 
 
 
