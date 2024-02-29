@@ -60,14 +60,13 @@ The associated bootloader and application projects demonstrate the following:
 ![Force Update](./images/MCC_Force_Update.png)
 4. Click "Generate"
 ![Generate](./images/MCC_Generate.png)
-5. Accept all incoming code changes by selecting "Replace All" in the merge helper UI
+5. Accept all incoming code changes for files **within the CryptoAuthenticationLibrary directory** by selecting "Replace All" in the merge helper UI. **NOTE: DO NOT accept incoming changes for boot_demo.c. Accept all other file changes and close out of MCC** 
 ![Merge Resolution](./images/MCC_Merge_Resolution.PNG)
 6. Press the “Make and Program” button on the top bar
 ![Make and Program Device](./images/make_and_program.png)
 7. Select the appropriate programmer if prompted
 8. The project should compile and program successfully
 9. Verify the LED11 is solid on the Development Board. This indicates the bootloader is running
-    a. If LED11 is blinking instead of solid, then the application code was programmed instead of only compiled. Go back to the “Programming the Bootloader” stage and re-program the bootloader
     
 #### Building the Application
 1. Open the app.X project in MPLAB® X
@@ -75,6 +74,7 @@ The associated bootloader and application projects demonstrate the following:
 ![Clean and Build](./images/clean_and_build.png)
 3. The project should compile cleanly. app.X/dist/default/production/app.X.production.hex should be generated
 4. Verify that LED11 is still solid
+    a. If LED11 is blinking instead of solid, then the application code was programmed instead of only compiled. Go back to the “Programming the Bootloader” stage and re-program the bootloader
 
 #### Loading the Application
 1. Open the Universal Bootloader Host Application tool (UBHA)
