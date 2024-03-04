@@ -60,6 +60,7 @@ Copyright (c) [2012-2024] Microchip Technology Inc.
 #include "boot_application_header.h"
 #include "boot_image.h"
 #include "boot_process.h"
+#include "../mcc_generated_files/timer/mccp9.h"
 
 #define DOWNLOADED_IMAGE    1u
 #define EXECUTION_IMAGE     0u
