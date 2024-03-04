@@ -23,7 +23,7 @@ The associated bootloader and application projects demonstrate the following:
 ## Tools 
 
 #### Software 
-* **THIS PROJECT REQUIRES A NON PUBLIC COPY OF THE CRYPTOGRAPHIC AUTHENTICATION LIBRARY (CAL) FOR TA100 SUPPORT! CONTACT MICROCHIP TO OBTAIN A COPY. YOU MUST REQUEST VERSION CryptoAuthLib 3.6.1 or later**
+* **THIS PROJECT REQUIRES A NON PUBLIC COPY OF THE CRYPTOGRAPHIC AUTHENTICATION LIBRARY (CAL) FOR TA100 SUPPORT! See the [CryptoAuthentication Library Release Notes](https://onlinedocs.microchip.com/pr/GUID-7F2639F3-1541-4BFC-A031-9A718BFFC502-en-US-16/index.html?GUID-7D69101E-EA71-47BE-B794-7F2CA6363B2C) for download details**
 * The unzipped example project files, boot.X and app.X
 * [MPLAB® X IDE v6.15 or later](https://www.microchip.com/en-us/tools-resources/develop/mplab-x-ide)
 * [MPLAB® XC16 v2.10 or later](https://www.microchip.com/en-us/tools-resources/develop/mplab-xc-compilers)
