@@ -4,7 +4,7 @@
     <img alt="Microchip Logo." src="../images/microchip_logo_black_red.png">
 </picture>
 
-## Secure Boot and Secure Firmware Upgrade over CAN-FD Demo
+## Secure Boot and Secure Firmware Upgrade over CAN-FD for dsPIC33C DSCs Demo
 
 ![Board picture](./images/board.jpg)
 
