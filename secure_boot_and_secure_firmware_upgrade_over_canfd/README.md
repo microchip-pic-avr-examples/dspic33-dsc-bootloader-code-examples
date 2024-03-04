@@ -49,20 +49,20 @@ The associated bootloader and application projects demonstrate the following:
 1. With the Development Board detached from any power source, programmer, or USB connection, connect the TA100 8-Pin SOIC CryptoAutomotive™ Socket board into the mikroBUS™ A slot with the jumpers set for SPI
 2. Connect the Peak analyzer/generator to your computer
 3. Connect the Peak analyzer/generator to the CAN/CAN-FD Driver Circuit on the Development Board
-4. Connect the micro-USB cable to port J1 of the Development Board to the host computer.
+4. Connect the micro-USB cable to port J1 of the Development Board to the host computer.<br>
 
 ![Hardware Setup](./images/hardware_setup.png)
 
 #### Programming the Bootloader
 1. Open the boot.X project in MPLAB® X
 2. Open MCC
-3. Right click on Project Resources and select "Force Update on All"
+3. Right click on Project Resources and select "Force Update on All"<br>
 ![Force Update](./images/MCC_Force_Update.png)
-4. Click "Generate"
+4. Click "Generate"<br>
 ![Generate](./images/MCC_Generate.png)
-5. Accept all incoming code changes for files **within the CryptoAuthenticationLibrary directory** by selecting "Replace All" in the merge helper UI. **NOTE: DO NOT accept incoming changes for boot_demo.c. Accept all other file changes and close out of MCC** 
+5. Accept all incoming code changes for files **within the CryptoAuthenticationLibrary directory** by selecting "Replace All" in the merge helper UI. **NOTE: DO NOT accept incoming changes for boot_demo.c. Accept all other file changes and close out of MCC**<br>
 ![Merge Resolution](./images/MCC_Merge_Resolution.PNG)
-6. Press the “Make and Program” button on the top bar
+6. Press the “Make and Program” button on the top bar<br>
 ![Make and Program Device](./images/make_and_program.png)
 7. Select the appropriate programmer if prompted
 8. The project should compile and program successfully
@@ -70,20 +70,20 @@ The associated bootloader and application projects demonstrate the following:
     
 #### Building the Application
 1. Open the app.X project in MPLAB® X
-2. Press the “Clean and Build Project” button on the top bar. **NOTE**: Make sure not to hit the program button. This will program the application code over the bootloader that was just programmed
+2. Press the “Clean and Build Project” button on the top bar. **NOTE**: Make sure not to hit the program button. This will program the application code over the bootloader that was just programmed<br>
 ![Clean and Build](./images/clean_and_build.png)
 3. The project should compile cleanly. app.X/dist/default/production/app.X.production.hex should be generated
 4. Verify that LED11 is still solid
     a. If LED11 is blinking instead of solid, then the application code was programmed instead of only compiled. Go back to the “Programming the Bootloader” stage and re-program the bootloader
 
 #### Loading the Application
-1. Open the Universal Bootloader Host Application tool (UBHA)
+1. Open the Universal Bootloader Host Application tool (UBHA)<br>
 ![UBHA](./images/UBHA_open.png)
-2. Select the “PIC24/dsPIC” option from the “Device Architecture” selection drop down
+2. Select the “PIC24/dsPIC” option from the “Device Architecture” selection drop down<br>
 ![UBHA Device Architecture](./images/UBHA_device_architecture.png)
-3. Select “CAN” from the protocol drop down selection box
+3. Select “CAN” from the protocol drop down selection box<br>
 ![UBHA Protocol Selection](./images/UBHA_protocol.png)
-4. Select the “Settings->CAN” option from the top menu
+4. Select the “Settings->CAN” option from the top menu<br>
 ![UBHA CAN Settings Dropdown](./images/UBHA_Settings_CAN_Dropdown.png)
 5. Select the Peak protocol analyzer being used and the appropriate CAN configuration settings for this demo (listed below). When complete, press “Apply”: 
     a. Nominal Bit Rate: 125.00 kbits/s
@@ -93,18 +93,18 @@ The associated bootloader and application projects demonstrate the following:
     e. Flexible Data Rate: 2Mbits/s
     f. Message Format: Standard
     g. Host to Device ID: 0xA1
-    h. Device to Host ID: 0xA2
+    h. Device to Host ID: 0xA2<br>
 ![CAN Settings](./images/UBHA_CAN_Settings.png)
 6. Press the "Read Device Settings" button
-    a. The Application start address and Application end address fields should have updated. If it did not or if you get a communication error, please go back to the “Programming the Bootloader” stage to make sure the bootloader was programmed correctly
+    a. The Application start address and Application end address fields should have updated. If it did not or if you get a communication error, please go back to the “Programming the Bootloader” stage to make sure the bootloader was programmed correctly<br>
 ![Read Device Settings](./images/UBHA_Read_Device_Settings.png)
 7. Load the application hex file by selecting “File->Open/Load File (*.hex)”
-    a. Select the file generated in the previous section: app.X/dist/default/production/app.X.production.hex
+    a. Select the file generated in the previous section: app.X/dist/default/production/app.X.production.hex<br>
 ![Open Hex File](./images/UBHA_Open_Hex.png)
-8. Check the "Enable Self Verification After Program" checkbox
+8. Check the "Enable Self Verification After Program" checkbox<br>
 ![Enable Verification](./images/UBHA_Enable_Verification.png)
 9. Press “Program Device”. The application should program erase, program and perform a self verify using the TA100 for an ECDSA verify then read back verify correctly. Note: The reset response may not be fully transmitted before reset which may result in the reset response failing. The reset most likely did occur and the error can be safely ignored. 
-    a. After a few seconds, LED11 should be blinking
+    a. After a few seconds, LED11 should be blinking<br>
 ![Program Device](./images/UBHA_Program.png)
 
 ## Trademarks
