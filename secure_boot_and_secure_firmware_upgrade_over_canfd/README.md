@@ -59,9 +59,9 @@ The associated bootloader and application projects demonstrate the following:
 3. Right click on Project Resources and select "Force Update on All"<br>
 ![Force Update](./images/MCC_Force_Update.png)
 4. Click "Generate"<br>
-![Generate](./images/MCC_Generate.PNG)
+![Generate](./images/MCC_Generate.png)
 5. Accept all incoming code changes for files **within the CryptoAuthenticationLibrary directory** by selecting "Replace All" in the merge helper UI. **NOTE: DO NOT accept incoming changes for boot_demo.c. Accept all other file changes and close out of MCC**<br>
-![Merge Resolution](./images/MCC_Merge_Resolution.PNG)
+![Merge Resolution](./images/MCC_Merge_Resolution.png)
 6. Press the “Make and Program” button on the top bar<br>
 ![Make and Program Device](./images/make_and_program.png)
 7. Select the appropriate programmer if prompted
