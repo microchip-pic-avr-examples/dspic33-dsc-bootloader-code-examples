@@ -27,7 +27,7 @@ The associated bootloader and application projects demonstrate the following:
 * The unzipped example project files, boot.X and app.X
 * [MPLAB® X IDE v6.15 or later](https://www.microchip.com/en-us/tools-resources/develop/mplab-x-ide)
 * [MPLAB® XC16 v2.10 or later](https://www.microchip.com/en-us/tools-resources/develop/mplab-xc-compilers)
-* [Universal Bootloader Host Application v1.19.3 or later](www.microchip.com/16-bit-bootloader) 
+* [Universal Bootloader Host Application v1.19.3 or later](https://www.microchip.com/16-bit-bootloader) 
 * Device Family Pack 1.12.354
 * [MPLAB® Code Configurator (MCC) v5.6.1 or later (optional - for code configuration)](https://www.microchip.com/en-us/tools-resources/configure/mplab-code-configurator)
 * 16-Bit Bootloader MCC module v1.25.0 or later (optional - for code configuration)
@@ -61,7 +61,7 @@ The associated bootloader and application projects demonstrate the following:
 4. Click "Generate"<br>
 ![Generate](./images/MCC_Generate.png)
 5. Accept all incoming code changes for files **within the CryptoAuthenticationLibrary directory** by selecting "Replace All" in the merge helper UI. **NOTE: DO NOT accept incoming changes for boot_demo.c. Accept all other file changes and close out of MCC**<br>
-![Merge Resolution](./images/MCC_Merge_Resolution.PNG)
+![Merge Resolution](./images/MCC_Merge_Resolution.png)
 6. Press the “Make and Program” button on the top bar<br>
 ![Make and Program Device](./images/make_and_program.png)
 7. Select the appropriate programmer if prompted
