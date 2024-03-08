@@ -68,7 +68,8 @@ The associated bootloader and application projects demonstrate the following:
 8. The project should compile and program successfully
 9. Verify the LED11 is solid on the Development Board. This indicates the bootloader is running
     
-#### Building the Application
+#### Building the Application (Optional)
+**NOTE**: A pre-generated .hex file has been included with this demo, therefore the following steps are **optional**
 1. Open the app.X project in MPLAB® X
 2. Press the “Clean and Build Project” button on the top bar. **NOTE**: Make sure not to hit the program button. This will program the application code over the bootloader that was just programmed<br>
 ![Clean and Build](./images/clean_and_build.png)
@@ -99,7 +100,7 @@ The associated bootloader and application projects demonstrate the following:
     a. The Application start address and Application end address fields should have updated. If it did not or if you get a communication error, please go back to the “Programming the Bootloader” stage to make sure the bootloader was programmed correctly<br>
 ![Read Device Settings](./images/UBHA_Read_Device_Settings.png)
 7. Load the application hex file by selecting “File->Open/Load File (*.hex)”
-    a. Select the file generated in the previous section: app.X/dist/default/production/app.X.production.hex<br>
+    a. Select app.X/dist/default/production/app.X.production.hex. This is included with the demo but may have been re-generated if Building the Application (Optional) was completed<br>
 ![Open Hex File](./images/UBHA_Open_Hex.png)
 8. Check the "Enable Self Verification After Program" checkbox<br>
 ![Enable Verification](./images/UBHA_Enable_Verification.png)
