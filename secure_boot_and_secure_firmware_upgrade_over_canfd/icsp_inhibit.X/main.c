@@ -25,45 +25,71 @@
 #include <string.h>
 
 #define WINDOW_SIZE 10
-#define UNLOCK_PATTERN "LOCKDEVICE"
+#define UNLOCK_COMMAND "LOCKDEVICE"
+
+static void clearTerminalScreen(void)
+{
+    printf("\033[2J"); 
+}
+
+static void clearTerminalLine(void)
+{
+    printf("\33[2K\r");
+}
+
+static void moveCursor(int row)
+{
+    printf("\033[%d;0f", row);
+}
+
+static void hideCursor()
+{
+    printf("\033[?25l");
+}
 
 int main(void)
 {
     char window[WINDOW_SIZE + 1];
     int windowIndex = 0;
-    int patternLength = strlen(UNLOCK_PATTERN);
+    int patternLength = strlen(UNLOCK_COMMAND);
     SYSTEM_Initialize();
-    printf("\033[2J"); // Clear the screen
-    
+    clearTerminalScreen();
+    moveCursor(1);
+    printf("Enter LOCKDEVICE to unlock the ICSP Inhibit feature.");
+    moveCursor(2);
     while(1)
     {    
         if(UART1_IsRxReady())
         {
             char receivedChar = UART1_Read();
             
-            
-            if(receivedChar == UNLOCK_PATTERN[windowIndex])
+            if(receivedChar == UNLOCK_COMMAND[windowIndex])
             {
                 window[windowIndex++] = receivedChar; 
                 window[windowIndex] = '\0'; 
             
-                
                 if(windowIndex == patternLength)
                 {
-                    printf("PATTERN FOUND! \n");
+                    moveCursor(3);
+                    clearTerminalLine();
+                    printf("Unlock command for ICSP Inhibit received. \n");
+                    hideCursor();
                     windowIndex = 0;
                 }
             }
             else
             {
-                windowIndex = (receivedChar == UNLOCK_PATTERN[0]) ? 1 : 0;
+                moveCursor(3);
+                clearTerminalLine();
+                printf("Incorrect command received. Try again.");
+                moveCursor(2);
+                clearTerminalLine();
+                windowIndex = (receivedChar == UNLOCK_COMMAND[0]) ? 1 : 0;
                 window[0] = (windowIndex == 1) ? receivedChar : '\0';
             }
-            
             while(!UART1_IsTxReady())
             {
-            }
-            UART1_Write(receivedChar);
+            }    
         }
     }
 }    
