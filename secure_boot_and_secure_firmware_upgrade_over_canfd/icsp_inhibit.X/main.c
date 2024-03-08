@@ -47,6 +47,14 @@ static void hideCursor()
     printf("\033[?25l");
 }
 
+static void printWarning()
+{
+    moveCursor(1);
+    printf("Enter LOCKDEVICE to unlock the ICSP Inhibit feature.");
+    moveCursor(3);
+    printf("WARNING: THIS PERMANENTLY DISABLES DIRECT PROGRAMMING OF THE BOARD.");
+}
+
 int main(void)
 {
     char window[WINDOW_SIZE + 1];
@@ -54,9 +62,7 @@ int main(void)
     int patternLength = strlen(UNLOCK_COMMAND);
     SYSTEM_Initialize();
     clearTerminalScreen();
-    moveCursor(1);
-    printf("Enter LOCKDEVICE to unlock the ICSP Inhibit feature.");
-    moveCursor(2);
+    printWarning();
     while(1)
     {    
         if(UART1_IsRxReady())
@@ -70,7 +76,7 @@ int main(void)
             
                 if(windowIndex == patternLength)
                 {
-                    moveCursor(3);
+                    moveCursor(5);
                     clearTerminalLine();
                     printf("Unlock command for ICSP Inhibit received. \n");
                     hideCursor();
@@ -79,11 +85,9 @@ int main(void)
             }
             else
             {
-                moveCursor(3);
+                moveCursor(5);
                 clearTerminalLine();
                 printf("Incorrect command received. Try again.");
-                moveCursor(2);
-                clearTerminalLine();
                 windowIndex = (receivedChar == UNLOCK_COMMAND[0]) ? 1 : 0;
                 window[0] = (windowIndex == 1) ? receivedChar : '\0';
             }
