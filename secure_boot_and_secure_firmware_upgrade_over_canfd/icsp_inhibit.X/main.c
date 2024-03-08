@@ -29,9 +29,11 @@
 
 int main(void)
 {
-    SYSTEM_Initialize();
     char window[WINDOW_SIZE + 1];
     int windowIndex = 0;
+    int patternLength = strlen(UNLOCK_PATTERN);
+    SYSTEM_Initialize();
+    printf("\033[2J"); // Clear the screen
     
     while(1)
     {    
@@ -39,19 +41,29 @@ int main(void)
         {
             char receivedChar = UART1_Read();
             
-            window[windowIndex] = receivedChar;
-            windowIndex = (windowIndex + 1) % WINDOW_SIZE;
             
-            window[WINDOW_SIZE] = '\0';
-            
-            if(strstr(window, UNLOCK_PATTERN)!= NULL)
+            if(receivedChar == UNLOCK_PATTERN[windowIndex])
             {
-                printf("PATTERN RECIEVED\n");
+                window[windowIndex++] = receivedChar; 
+                window[windowIndex] = '\0'; 
+            
+                
+                if(windowIndex == patternLength)
+                {
+                    printf("PATTERN FOUND! \n");
+                    windowIndex = 0;
+                }
             }
-            while(!UART1_IsTxReady()) 
-            {     
+            else
+            {
+                windowIndex = (receivedChar == UNLOCK_PATTERN[0]) ? 1 : 0;
+                window[0] = (windowIndex == 1) ? receivedChar : '\0';
+            }
+            
+            while(!UART1_IsTxReady())
+            {
             }
             UART1_Write(receivedChar);
         }
-    }    
-}
+    }
+}    
