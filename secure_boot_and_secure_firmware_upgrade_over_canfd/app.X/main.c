@@ -20,19 +20,28 @@
  */
 #include "mcc_generated_files/system/system.h"
 #include "mcc_generated_files/system/pins.h"
+#include "mcc_generated_files/flash/flash.h"
+#include "mcc_generated_files/flash/flash_types.h"
+#include "mcc_generated_files/boot/boot_config.h"
 
 /*
     Main application
  */
 
 int main(void) {
-    unsigned int counter = 0;
 
     SYSTEM_Initialize();
-
-    while (1) {
-        if ((counter++ % 0x8000) == 0) {
-            IO_RE9_Toggle();
+    
+    flash_data_t flashData[2];
+    FLASH_Read(0x000000, 2, flashData);
+    uint16_t resetAddressLower = flashData[0];
+    uint32_t combinedResetAddress = (flashData[1]<<16) | resetAddressLower;
+    
+    while (1) 
+    {
+        if (combinedResetAddress < BOOT_CONFIG_PROGRAMMABLE_ADDRESS_LOW) 
+        {
+            // ICSP Feature
         }
     }
 }
