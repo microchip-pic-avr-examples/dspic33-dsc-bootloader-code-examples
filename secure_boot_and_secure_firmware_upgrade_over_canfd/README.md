@@ -115,7 +115,6 @@ The associated bootloader and application projects demonstrate the following:
 4. Once the board is powered back on, release S1
 5. Verify LED11 is solid, indicating the device is in bootloader mode. The application can now be loaded once again (see Loading the Application) 
 
-
 ## Trademarks
 
 MPLAB® is a registered trademark of Microchip Technology Inc. All other trademarks are the property of their respective owner.
