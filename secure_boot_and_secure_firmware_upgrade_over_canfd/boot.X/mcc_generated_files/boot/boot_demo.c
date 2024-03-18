@@ -60,6 +60,7 @@ Copyright (c) [2012-2024] Microchip Technology Inc.
 #include "boot_application_header.h"
 #include "boot_image.h"
 #include "boot_process.h"
+#include "../mcc_generated_files/system/pins.h"
 #include "../mcc_generated_files/timer/mccp9.h"
 
 #define DOWNLOADED_IMAGE    1u
@@ -216,5 +217,5 @@ static bool EnterBootloadMode(void)
     /* NOTE: This might be a a push button status on power up, a command from a peripheral, 
      * or whatever is specific to your boot loader implementation */    
 
-    return false;
+    return (IO_RD13_GetValue()==0);
 }

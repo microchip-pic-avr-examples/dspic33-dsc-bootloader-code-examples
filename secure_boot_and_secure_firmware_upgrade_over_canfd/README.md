@@ -107,6 +107,15 @@ The associated bootloader and application projects demonstrate the following:
     a. After a few seconds, LED11 should be blinking<br>
 ![Program Device](./images/UBHA_Program.png)
 
+#### Re-Entering Bootloader Mode
+1. Power off the board by unplugging the micro-USB cable from port J1
+2. While the board is powered off, hold down switch S1<br>
+![S1](./images/switch_location.png)
+3. Continue holding down S1 and plug the micro-USB cable back into port J1
+4. Once the board is powered back on, release S1
+5. Verify LED11 is solid, indicating the device is in bootloader mode. The application can now be loaded once again (see Loading the Application) 
+
+
 ## Trademarks
 
 MPLAB® is a registered trademark of Microchip Technology Inc. All other trademarks are the property of their respective owner.
