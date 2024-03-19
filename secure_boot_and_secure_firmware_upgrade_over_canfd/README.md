@@ -40,16 +40,22 @@ The associated bootloader and application projects demonstrate the following:
 * A CAN cable
 * A CAN-FD bus terminator (or modify the Peak analyzer per their user's guide for proper CAN-FD termination)
 * A micro USB cable, a USB-Type C cable, or a 9v power adapter for the dsPIC33C Touch CAN LIN Curiosity Development Board (for powering the board)
-* [TA100 Trust Anchor External HSM 8-Pin SOIC](https://www.microchip.com/en-us/product/ta100)
+* [TA100 Trust Anchor External HSM 8-Pin SOIC](https://www.microchip.com/en-us/product/ta100) - NOTE: make sure to get the **SPI** variant for this demo.
 * [TA100 8-Pin SOIC CryptoAutomotive™ Socket Board](https://www.microchip.com/en-us/development-tool/AC164167)
 
 ## Running the Demo
 
 ##### Hardware Setup
-1. With the Development Board detached from any power source, programmer, or USB connection, connect the TA100 8-Pin SOIC CryptoAutomotive™ Socket board into the mikroBUS™ A slot with the jumpers set for SPI
-2. Connect the Peak analyzer/generator to your computer
-3. Connect the Peak analyzer/generator to the CAN/CAN-FD Driver Circuit on the Development Board
-4. Connect the micro-USB cable to port J1 of the Development Board to the host computer.<br>
+1. Insert the TA100 into the TA100 8-Pin SOIC CryptoAutomotive™ Socket board.  **NOTE** - make sure to align the TA100 pin 1 indicator with the pin 1 indicator on the socket board silkscreen.<br>
+![TA100 Socket Alignment](./images/socket_pin_1.png)
+2. Short the J10 jumper to the "3.3v" option.<br>
+![Power Jumper](./images/socket_power_jumper.png)
+3. Switch all the jumpers on the TA100 8-Pin SOIC CryptoAutomotive™ Socket board to the SPI setting (J3, J4, J5, J6, J7).<br>
+![SPI Jumpers](./images/socket_spi_jumper.png)
+4. With the Development Board detached from any power source, programmer, or USB connection, connect the TA100 8-Pin SOIC CryptoAutomotive™ Socket board into the mikroBUS™ A slot with the jumpers set for SPI
+5. Connect the Peak analyzer/generator to your computer
+6. Connect the Peak analyzer/generator to the CAN/CAN-FD Driver Circuit on the Development Board
+7. Connect the micro-USB cable to port J1 of the Development Board to the host computer.<br>
 
 ![Hardware Setup](./images/hardware_setup.png)
 
