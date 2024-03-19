@@ -30,7 +30,7 @@ $OBJ_CPY -I ihex -O binary "$projectDir/$imageDir/temp_original_copy.X.productio
 rm "$projectDir/$imageDir/temp_original_copy.X.production.hex"
 
 # Sign binary file
-java -jar signing_tool.jar -sign "$projectDir/$imageDir/icsp_inhibit.X.production.bin" "..\..\..\boot.X\private_key.pem" "$projectDir/$imageDir/icsp_inhibit.X.production.bin.signature.der"
+java -jar signing_tool.jar -sign "$projectDir/$imageDir/icsp_inhibit.X.production.bin" "../../../boot.X/private_key.pem" "$projectDir/$imageDir/icsp_inhibit.X.production.bin.signature.der"
 
 export compilerDir="$1"
 export projectDir="$2"
