@@ -52,9 +52,9 @@ The associated bootloader and application projects demonstrate the following:
 ![Power Jumper](./images/socket_power_jumper.png)
 3. Switch all the jumpers on the TA100 8-Pin SOIC CryptoAutomotive™ Socket board to the SPI setting (J3, J4, J5, J6, J7).<br>
 ![SPI Jumpers](./images/socket_spi_jumper.png)
-4. With the Development Board detached from any power source, programmer, or USB connection, connect the TA100 8-Pin SOIC CryptoAutomotive™ Socket board into the mikroBUS™ A slot with the jumpers set for SPI
-5. Connect the Peak analyzer/generator to your computer
-6. Connect the Peak analyzer/generator to the CAN/CAN-FD Driver Circuit on the Development Board
+4. With the Development Board detached from any power source, programmer, or USB connection, connect the TA100 8-Pin SOIC CryptoAutomotive™ Socket board into the mikroBUS™ A slot with the jumpers set for SPI.
+5. Connect the Peak analyzer/generator to your computer.
+6. Connect the Peak analyzer/generator to the CAN/CAN-FD Driver Circuit on the Development Board.
 7. Connect the micro-USB cable to port J1 of the Development Board to the host computer.<br>
 
 ![Hardware Setup](./images/hardware_setup.png)
