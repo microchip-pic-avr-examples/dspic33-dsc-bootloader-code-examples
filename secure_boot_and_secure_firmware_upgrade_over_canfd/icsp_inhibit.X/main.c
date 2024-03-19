@@ -26,14 +26,14 @@
 #define UNLOCK_COMMAND "LOCKDEVICE"
 
 // Function prototypes
-static void clearTerminalScreen(void);
-static void clearTerminalLine(void);
-static void moveCursor(int row);
-static void hideCursor(void);
-static void printWarning(void);
-static void processReceivedChar(char receivedChar, char *window, int *windowIndex);
-static void resetWindowOnMismatch(char *window, int *windowIndex, char receivedChar);
-static void checkForUnlockCommand(char *window, int windowIndex);
+static void ClearTerminalScreen(void);
+static void ClearTerminalLine(void);
+static void MoveCursor(int row);
+static void HideCursor(void);
+static void PrintWarning(void);
+static void ProcessReceivedChar(char receivedChar, char *window, int *windowIndex);
+static void ResetWindowOnMismatch(char *window, int *windowIndex, char receivedChar);
+static void CheckForUnlockCommand(char *window, int windowIndex);
 
 int main(void)
 {
@@ -41,83 +41,83 @@ int main(void)
     int windowIndex = 0;
 
     SYSTEM_Initialize();
-    clearTerminalScreen();
-    printWarning();
+    ClearTerminalScreen();
+    PrintWarning();
 
     while (1)
     {
         if (UART1_IsRxReady())
         {
             char receivedChar = UART1_Read();
-            processReceivedChar(receivedChar, window, &windowIndex);
+            ProcessReceivedChar(receivedChar, window, &windowIndex);
         }
     }
 }
 
-static void clearTerminalScreen(void)
+static void ClearTerminalScreen(void)
 {
     printf("\033[2J");
 }
 
-static void clearTerminalLine(void)
+static void ClearTerminalLine(void)
 {
     printf("\33[2K\r");
 }
 
-static void moveCursor(int row)
+static void MoveCursor(int row)
 {
     printf("\033[%d;0f", row);
 }
 
-static void hideCursor(void)
+static void HideCursor(void)
 {
     printf("\033[?25l");
 }
 
-static void printWarning(void)
+static void PrintWarning(void)
 {
-    moveCursor(1);
+    MoveCursor(1);
     printf("Type LOCKDEVICE to enable the ICSP Inhibit feature.");
-    moveCursor(3);
+    MoveCursor(3);
     printf("WARNING: THIS PERMANENTLY DISABLES DIRECT PROGRAMMING OF THE BOARD.");
 }
 
-static void processReceivedChar(char receivedChar, char *window, int *windowIndex)
+static void ProcessReceivedChar(char receivedChar, char *window, int *windowIndex)
 {
-    moveCursor(10);
+    MoveCursor(10);
     printf("%c", receivedChar);
     if (receivedChar == UNLOCK_COMMAND[*windowIndex])
     {
         window[(*windowIndex)++] = receivedChar;
         window[*windowIndex] = '\0';
 
-        checkForUnlockCommand(window, *windowIndex);
+        CheckForUnlockCommand(window, *windowIndex);
     }
     else
     {
-        resetWindowOnMismatch(window, windowIndex, receivedChar);
+        ResetWindowOnMismatch(window, windowIndex, receivedChar);
     }
 }
 
-static void resetWindowOnMismatch(char *window, int *windowIndex, char receivedChar)
+static void ResetWindowOnMismatch(char *window, int *windowIndex, char receivedChar)
 {
-    moveCursor(5);
-    clearTerminalLine();
+    MoveCursor(5);
+    ClearTerminalLine();
     printf("Incorrect command received. Try again.");
     *windowIndex = (receivedChar == UNLOCK_COMMAND[0]) ? 1 : 0;
     window[0] = (*windowIndex == 1) ? receivedChar : '\0';
 }
 
-static void checkForUnlockCommand(char *window, int windowIndex)
+static void CheckForUnlockCommand(char *window, int windowIndex)
 {
     int patternLength = strlen(UNLOCK_COMMAND);
 
     if (windowIndex == patternLength)
     {
-        moveCursor(5);
-        clearTerminalLine();
+        MoveCursor(5);
+        ClearTerminalLine();
         printf("Unlock command for ICSP Inhibit received.\n");
-        hideCursor();
+        HideCursor();
         memset(window, 0, WINDOW_SIZE + 1); // Clear the window buffer
         windowIndex = 0;
     }
