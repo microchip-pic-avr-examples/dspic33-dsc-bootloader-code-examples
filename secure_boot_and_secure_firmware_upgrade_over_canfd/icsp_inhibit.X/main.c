@@ -104,8 +104,16 @@ static void ResetWindowOnMismatch(char *window, int *windowIndex, char receivedC
     MoveCursor(5);
     ClearTerminalLine();
     printf("Incorrect command received. Try again.");
-    *windowIndex = (receivedChar == UNLOCK_COMMAND[0]) ? 1 : 0;
-    window[0] = (*windowIndex == 1) ? receivedChar : '\0';
+    if(receivedChar == UNLOCK_COMMAND[0])
+    {
+        *windowIndex = 1;
+        window[0] = receivedChar;
+    }
+    else
+    {
+        *windowIndex = 0;
+        window[0] = '\0';
+    }
 }
 
 static void CheckForUnlockCommand(char *window, int windowIndex)
