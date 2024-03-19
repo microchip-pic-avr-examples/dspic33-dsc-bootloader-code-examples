@@ -32,8 +32,8 @@ static void MoveCursor(int row);
 static void HideCursor(void);
 static void PrintWarning(void);
 static void ProcessReceivedChar(char receivedChar, char *window, int *windowIndex);
-static void ResetWindowOnMismatch(char *window, int *windowIndex, char receivedChar);
-static void CheckForUnlockCommand(char *window, int windowIndex);
+static void ResetWindowOnMismatch(char *window, int *windowIndex);
+static void CheckForUnlockCommand(char *window, int *windowIndex);
 
 int main(void)
 {
@@ -85,48 +85,41 @@ static void PrintWarning(void)
 static void ProcessReceivedChar(char receivedChar, char *window, int *windowIndex)
 {
     MoveCursor(10);
-    printf("%c", receivedChar);
-    if (receivedChar == UNLOCK_COMMAND[*windowIndex])
+    
+    if (*windowIndex < WINDOW_SIZE && receivedChar == UNLOCK_COMMAND[*windowIndex])
     {
+        printf("%c", receivedChar);
         window[(*windowIndex)++] = receivedChar;
         window[*windowIndex] = '\0';
-
-        CheckForUnlockCommand(window, *windowIndex);
+        CheckForUnlockCommand(window, windowIndex);
     }
     else
     {
-        ResetWindowOnMismatch(window, windowIndex, receivedChar);
+        ClearTerminalLine();
+        ResetWindowOnMismatch(window, windowIndex);
     }
 }
 
-static void ResetWindowOnMismatch(char *window, int *windowIndex, char receivedChar)
+static void ResetWindowOnMismatch(char *window, int *windowIndex)
 {
     MoveCursor(5);
     ClearTerminalLine();
-    printf("Incorrect command received. Try again.");
-    if(receivedChar == UNLOCK_COMMAND[0])
-    {
-        *windowIndex = 1;
-        window[0] = receivedChar;
-    }
-    else
-    {
-        *windowIndex = 0;
-        window[0] = '\0';
-    }
+    printf("Invalid character entered. Try again.");
+    *windowIndex = 0;
+    memset(window, 0, WINDOW_SIZE + 1); 
 }
 
-static void CheckForUnlockCommand(char *window, int windowIndex)
+static void CheckForUnlockCommand(char *window, int *windowIndex)
 {
     int patternLength = strlen(UNLOCK_COMMAND);
 
-    if (windowIndex == patternLength)
+    if (*windowIndex == patternLength)
     {
         MoveCursor(5);
         ClearTerminalLine();
         printf("Unlock command for ICSP Inhibit received.\n");
         HideCursor();
-        memset(window, 0, WINDOW_SIZE + 1); // Clear the window buffer
-        windowIndex = 0;
+        *windowIndex = 0;
+        memset(window, 0, WINDOW_SIZE + 1);
     }
 }
