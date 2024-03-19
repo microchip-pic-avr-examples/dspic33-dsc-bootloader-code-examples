@@ -60,7 +60,7 @@ The associated bootloader and application projects demonstrate the following:
 ![Force Update](./images/MCC_Force_Update.png)
 4. Click "Generate"<br>
 ![Generate](./images/MCC_Generate.png)
-5. Accept all incoming code changes for files **within the CryptoAuthenticationLibrary directory** by selecting "Replace All" in the merge helper UI. **NOTE: DO NOT accept incoming changes for boot_demo.c. Accept all other file changes and close out of MCC**<br>
+5. Accept all incoming code changes for files **within the CryptoAuthenticationLibrary directory** by selecting "Replace All" in the merge helper UI<br> **NOTE: DO NOT accept incoming changes for boot_demo.c. Accept all other file changes and close out of MCC**<br>
 ![Merge Resolution](./images/MCC_Merge_Resolution.png)
 6. Press the “Make and Program” button on the top bar<br>
 ![Make and Program Device](./images/make_and_program.png)
@@ -70,7 +70,7 @@ The associated bootloader and application projects demonstrate the following:
     
 #### Building the Application
 1. Open the app.X project in MPLAB® X
-2. Press the “Clean and Build Project” button on the top bar. **NOTE**: Make sure not to hit the program button. This will program the application code over the bootloader that was just programmed<br>
+2. Click the dropdown arrow next to the “Clean and Build Project” button on the top bar and select "Clean and Build Project" <br>**NOTE**: If "Clean and Build for Debugging" is selected instead, a new hex file will not be generated <br>**NOTE**: Make sure not to hit the program button. This will program the application code over the bootloader that was just programmed<br>
 ![Clean and Build](./images/clean_and_build.png)
 3. The project should compile cleanly. app.X/dist/default/production/app.X.production.hex should be generated
 4. Verify that LED11 is still solid
@@ -103,7 +103,7 @@ The associated bootloader and application projects demonstrate the following:
 ![Open Hex File](./images/UBHA_Open_Hex.png)
 8. Check the "Enable Self Verification After Program" checkbox<br>
 ![Enable Verification](./images/UBHA_Enable_Verification.png)
-9. Press “Program Device”. The application should program erase, program and perform a self verify using the TA100 for an ECDSA verify then read back verify correctly. Note: The reset response may not be fully transmitted before reset which may result in the reset response failing. The reset most likely did occur and the error can be safely ignored. 
+9. Press “Program Device”. The application should program erase, program and perform a self verify using the TA100 for an ECDSA verify then read back verify correctly.<br>**NOTE**: The reset response may not be fully transmitted before reset which may result in the reset response failing. The reset most likely did occur and the error can be safely ignored 
     a. After a few seconds, LED11 should be blinking<br>
 ![Program Device](./images/UBHA_Program.png)
 
