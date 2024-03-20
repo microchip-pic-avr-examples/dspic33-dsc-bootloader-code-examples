@@ -96,6 +96,57 @@
 
 /**
  * @ingroup  pinsdriver
+ * @brief    Sets the RD13 GPIO Pin which has a custom name of IO_RD13 to High
+ * @pre      The RD13 must be set as Output Pin             
+ * @param    none
+ * @return   none  
+ */
+#define IO_RD13_SetHigh()          (_LATD13 = 1)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Sets the RD13 GPIO Pin which has a custom name of IO_RD13 to Low
+ * @pre      The RD13 must be set as Output Pin
+ * @param    none
+ * @return   none  
+ */
+#define IO_RD13_SetLow()           (_LATD13 = 0)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Toggles the RD13 GPIO Pin which has a custom name of IO_RD13
+ * @pre      The RD13 must be set as Output Pin
+ * @param    none
+ * @return   none  
+ */
+#define IO_RD13_Toggle()           (_LATD13 ^= 1)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Reads the value of the RD13 GPIO Pin which has a custom name of IO_RD13
+ * @param    none
+ * @return   none  
+ */
+#define IO_RD13_GetValue()         _RD13
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Configures the RD13 GPIO Pin which has a custom name of IO_RD13 as Input
+ * @param    none
+ * @return   none  
+ */
+#define IO_RD13_SetDigitalInput()  (_TRISD13 = 1)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Configures the RD13 GPIO Pin which has a custom name of IO_RD13 as Output
+ * @param    none
+ * @return   none  
+ */
+#define IO_RD13_SetDigitalOutput() (_TRISD13 = 0)
+
+/**
+ * @ingroup  pinsdriver
  * @brief    Sets the RD15 GPIO Pin which has a custom name of IO_RD15 to High
  * @pre      The RD15 must be set as Output Pin             
  * @param    none
