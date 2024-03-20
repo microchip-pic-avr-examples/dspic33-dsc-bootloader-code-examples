@@ -77,6 +77,18 @@ void BOOT_DEMO_Initialize(void)
     
 }
 
+static void VerifyingApplicationIndicator(bool verifying)
+{
+    if(verifying)
+    {
+        IO_RE6_SetHigh();   //LED6 on
+    }
+    else
+    {
+        IO_RE6_SetLow();    //LED6 off
+    }
+}
+
 /*******************************************************************************
  *  The check to see if you want to update or not is somewhat complex.  Below 
  *  is a list of the conditions when an update is required:
@@ -182,12 +194,16 @@ void BOOT_DEMO_Tasks(void)
         }
         else
         {
+            VerifyingApplicationIndicator(true);
+            
             UpdateFromDownload();
 
             if( executionImageRequiresValidation == true )
             {
                 executionImageValid = BOOT_ImageVerify(EXECUTION_IMAGE);
             }
+            
+            VerifyingApplicationIndicator(false);
 
             if(executionImageValid == false)
             {
