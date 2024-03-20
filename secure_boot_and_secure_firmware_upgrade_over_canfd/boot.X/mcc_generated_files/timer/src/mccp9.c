@@ -74,8 +74,8 @@ const struct TIMER_INTERFACE CAN_TP_TIMER = {
 
 void MCCP9_Timer_Initialize(void)
 {
-    // MOD ; CCSEL disabled; TMR32 16 Bit; TMRPS 1:1; CLKSEL FOSC; TMRSYNC disabled; CCPSLP disabled; CCPSIDL disabled; CCPON disabled; 
-    CCP9CON1L = 0x200; //The module is disabled, till other settings are configured
+    // MOD ; CCSEL disabled; TMR32 16 Bit; TMRPS 1:4; CLKSEL FOSC; TMRSYNC disabled; CCPSLP disabled; CCPSIDL disabled; CCPON disabled; 
+    CCP9CON1L = 0x240; //The module is disabled, till other settings are configured
     //SYNC None; ALTSYNC disabled; ONESHOT disabled; TRIGEN disabled; IOPS Each Time Base Period Match; RTRGEN disabled; OPSRC Timer Interrupt Event; 
     CCP9CON1H = 0x0;
     //ASDG 0x0; SSDG disabled; ASDGM disabled; PWMRSEN disabled; 
@@ -90,8 +90,8 @@ void MCCP9_Timer_Initialize(void)
     CCP9TMRL = 0x0;
     //TMRH 0x0000; 
     CCP9TMRH = 0x0;
-    //PRL 7999; 
-    CCP9PRL = 0x1F3F;
+    //PRL 49999; 
+    CCP9PRL = 0xC34F;
     //PRH 0; 
     CCP9PRH = 0x0;
     //CMPA 0; 

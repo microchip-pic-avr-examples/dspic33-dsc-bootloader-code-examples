@@ -44,21 +44,25 @@ void CLOCK_Initialize(void)
 {
     /*  
        Input frequency                               :  8.00 MHz
-       Clock source                                  :  FRC Oscillator
-       System frequency (Fosc)                       :  8.00 MHz
-       Clock switching enabled                       :  false
+       Clock source                                  :  External Oscillator with PLL
+       System frequency (Fosc)                       :  200.00 MHz [(8.00 MHz / 1) * 50 / 1 / 2 = 200.00 MHz]
+       PLL VCO frequency (Fvco)                      :  400.00 MHz [(8.00 MHz / 1) * 50 = 400.00 MHz]
+       PLL output frequency (Fpllo)                  :  400.00 MHz [(8.00 MHz / 1) * 50 / 1 = 400.00 MHz]
+       PLL VCO divider frequency (Fvcodiv)           :  100.00 MHz [400.00 MHz / 4 = 100.00 MHz]
+       Clock switching enabled                       :  true
+       Clock source when device boots                :  FRC Oscillator
        Auxiliary clock source                        :  FRC Oscillator
        Auxiliary clock input frequency               :  8.00 MHz
        Auxiliary clock PLL output frequency (AFpllo) :  8.00 MHz
     */
     // RCDIV FRC/1; PLLPRE 1:1; DOZE 1:8; DOZEN disabled; ROI disabled; 
     CLKDIV = 0x3001;
-    // PLLDIV 150; 
-    PLLFBD = 0x96;
+    // PLLDIV 50; 
+    PLLFBD = 0x32;
     // TUN Center frequency; 
     OSCTUN = 0x0;
-    // PLLPOST 1:4; VCODIV FVCO/4; POST2DIV 1:1; 
-    PLLDIV = 0x41;
+    // PLLPOST 1:1; VCODIV FVCO/4; POST2DIV 1:1; 
+    PLLDIV = 0x11;
     // ENAPLL disabled; FRCSEL FRC Oscillator; APLLPRE 1:1; 
     ACLKCON1 = 0x101;
     // APLLFBDIV 150; 
@@ -91,9 +95,12 @@ void CLOCK_Initialize(void)
     PMD7 = 0x0;
     // DMTMD enabled; CLC3MD enabled; OPAMPMD enabled; BIASMD enabled; CLC4MD enabled; SENT1MD enabled; CLC1MD enabled; CLC2MD enabled; SENT2MD enabled; 
     PMD8 = 0x0;
-    // CF no clock failure; NOSC FRC; CLKLOCK unlocked; OSWEN Switch is Complete; 
-    __builtin_write_OSCCONH((uint8_t) (0x00));
-    __builtin_write_OSCCONL((uint8_t) (0x00));
+    // CF no clock failure; NOSC PRIPLL; CLKLOCK unlocked; OSWEN Switch is Complete; 
+    __builtin_write_OSCCONH((uint8_t) (0x03));
+    __builtin_write_OSCCONL((uint8_t) (0x01));
+    // Wait for Clock switch to occur
+    while (OSCCONbits.OSWEN != 0);
+    while (OSCCONbits.LOCK != 1);
 }
 
 bool CLOCK_AuxPllLockStatusGet(void)

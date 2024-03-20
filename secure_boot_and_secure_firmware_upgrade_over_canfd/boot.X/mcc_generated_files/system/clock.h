@@ -47,7 +47,7 @@
   @brief    This macro is used to read the System clock (FOSC) Frequency configured in 
             the MCC Melody User Interface
 */
-#define CLOCK_SystemFrequencyGet()        (8000000UL)
+#define CLOCK_SystemFrequencyGet()        (200000000UL)
 
 /** 
   @ingroup  clockdriver

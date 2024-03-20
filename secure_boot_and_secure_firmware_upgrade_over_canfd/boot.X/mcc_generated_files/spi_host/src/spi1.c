@@ -81,7 +81,7 @@ static const struct SPI1_HOST_CONFIG config[] = {
                                         { 
                                             /*Configuration setting for CrytoAuthenticationLibrary.
                                             SPI Mode : Mode 0, Sampled at : Middle, Clock Frequency : 1000 kHz*/
-                                            0x1,//SPI1BRGL
+                                            0x31,//SPI1BRGL
                                             0x121,//SPI1CON1L
                                         },
                                     };

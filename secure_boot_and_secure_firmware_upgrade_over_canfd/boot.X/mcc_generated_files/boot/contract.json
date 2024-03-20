@@ -1184,7 +1184,7 @@
     "privateKeyPath": "private_key.pem",
     "secureElementStorage": {}
   },
-  "bootloaderFoscValue": 4000000,
+  "bootloaderFoscValue": 100000000,
   "isCodeProtectEnabled": true,
   "isAntiRollBackEnabled": true,
   "downloadStartAddress": 372736,

@@ -25,13 +25,15 @@
     Main application
  */
 
+#define BLINK_DELAY_COUNT 0x80000UL
+
 int main(void) {
-    unsigned int counter = 0;
+    uint32_t counter = 0;
 
     SYSTEM_Initialize();
 
     while (1) {
-        if ((counter++ % 0x8000) == 0) {
+        if ((counter++ % BLINK_DELAY_COUNT) == 0) {
             IO_RE9_Toggle();
         }
     }
