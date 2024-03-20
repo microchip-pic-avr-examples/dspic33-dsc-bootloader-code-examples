@@ -21,6 +21,7 @@
  
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 
 #define WINDOW_SIZE 10
 #define UNLOCK_COMMAND "LOCKDEVICE"
@@ -31,6 +32,7 @@ static void ClearTerminalLine(void);
 static void MoveCursor(int row);
 static void HideCursor(void);
 static void PrintWarning(void);
+static void AppendCharToWindow(char receivedChar, char *window, int *windowIndex);
 static void ProcessReceivedChar(char receivedChar, char *window, int *windowIndex);
 static void ResetWindowOnMismatch(char *window, int *windowIndex);
 static void CheckForUnlockCommand(char *window, int *windowIndex);
@@ -43,13 +45,13 @@ int main(void)
     SYSTEM_Initialize();
     ClearTerminalScreen();
     PrintWarning();
-
     while (1)
     {
         if (UART1_IsRxReady())
         {
             char receivedChar = UART1_Read();
             ProcessReceivedChar(receivedChar, window, &windowIndex);
+            CheckForUnlockCommand(window, &windowIndex);
         }
     }
 }
@@ -84,24 +86,30 @@ static void PrintWarning(void)
 
 static void ProcessReceivedChar(char receivedChar, char *window, int *windowIndex)
 {
-    MoveCursor(10);
+    bool isCharValid = (*windowIndex < strlen(UNLOCK_COMMAND)) && (receivedChar == UNLOCK_COMMAND[*windowIndex]);
     
-    if (*windowIndex < WINDOW_SIZE && receivedChar == UNLOCK_COMMAND[*windowIndex])
+    if (isCharValid)
     {
-        printf("%c", receivedChar);
-        window[(*windowIndex)++] = receivedChar;
-        window[*windowIndex] = '\0';
-        CheckForUnlockCommand(window, windowIndex);
+        AppendCharToWindow(receivedChar, window, windowIndex);
+        MoveCursor(10);
+        printf("%s", window);
     }
     else
     {
-        ClearTerminalLine();
         ResetWindowOnMismatch(window, windowIndex);
     }
 }
 
+static void AppendCharToWindow(char receivedChar, char *window, int *windowIndex)
+{
+    window[(*windowIndex)++] = receivedChar;
+    window[*windowIndex] = '\0';
+}
+
 static void ResetWindowOnMismatch(char *window, int *windowIndex)
 {
+    MoveCursor(10);
+    ClearTerminalLine();
     MoveCursor(5);
     ClearTerminalLine();
     printf("Invalid character entered. Try again.");
@@ -111,14 +119,13 @@ static void ResetWindowOnMismatch(char *window, int *windowIndex)
 
 static void CheckForUnlockCommand(char *window, int *windowIndex)
 {
-    int patternLength = strlen(UNLOCK_COMMAND);
-
-    if (*windowIndex == patternLength)
+    if (strncmp(window, UNLOCK_COMMAND, *windowIndex) == 0 && *windowIndex == strlen(UNLOCK_COMMAND))
     {
         MoveCursor(5);
         ClearTerminalLine();
-        printf("Unlock command for ICSP Inhibit received.\n");
-        HideCursor();
+        printf("Unlock command successful.\n");
+        MoveCursor(10);
+        ClearTerminalLine();
         *windowIndex = 0;
         memset(window, 0, WINDOW_SIZE + 1);
     }
