@@ -19,6 +19,7 @@
     THIS SOFTWARE.
  */
 #include "mcc_generated_files/system/system.h"
+#include "mcc_generated_files/system/pins.h"
 #include "mcc_generated_files/flash/flash.h"
 #include "mcc_generated_files/flash/flash_types.h"
 #include "mcc_generated_files/boot/boot_config.h"
@@ -37,7 +38,8 @@
  * The GOTO instruction contains two 24 bit words, the first of which contains 
  * the lower 15 bits of the address  and the second of which contains the upper 
  * 7 bits. The following code reads the GOTO address at the reset vector and 
- * parses the two words in order to determine the reset address. 
+ * parses the two words in order to determine the reset address. The opcode bits
+ * in the GOTO instruction are masked. 
  * 
  * Refer to https://ww1.microchip.com/downloads/en/DeviceDoc/70000157g.pdf for 
  * additional details on the GOTO instruction format.   
@@ -46,12 +48,12 @@ uint32_t GetResetAddress()
 {   
     flash_data_t flashData[2];
     FLASH_Read(0x000000, 2, flashData);
-    return (flashData[1]<<16) | flashData[0];
+    return (((flashData[1] & 0x0000007F)<<16) | (flashData[0] & 0x0000FFFE));
 }
 
 bool WasLoadedByBootloader()
 {
-    return ((GetResetAddress() & 0x0000FFFF) < BOOT_CONFIG_PROGRAMMABLE_ADDRESS_LOW);
+    return (GetResetAddress() < BOOT_CONFIG_PROGRAMMABLE_ADDRESS_LOW);
 }
 
 int main(void) {
@@ -62,7 +64,7 @@ int main(void) {
     {
         if (WasLoadedByBootloader()) 
         {
-            // ICSP Inhibit
+            IO_RE6_SetHigh();
         }
     }
 }
