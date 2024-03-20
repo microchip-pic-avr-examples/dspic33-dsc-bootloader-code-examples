@@ -19,7 +19,6 @@
     THIS SOFTWARE.
  */
 #include "mcc_generated_files/system/system.h"
-#include "mcc_generated_files/system/pins.h"
 #include "mcc_generated_files/flash/flash.h"
 #include "mcc_generated_files/flash/flash_types.h"
 #include "mcc_generated_files/boot/boot_config.h"
@@ -64,7 +63,7 @@ int main(void) {
     {
         if (WasLoadedByBootloader()) 
         {
-            IO_RE6_SetHigh();
+            // ICSP Inhibit
         }
     }
 }
