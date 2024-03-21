@@ -19,10 +19,8 @@
     THIS SOFTWARE.
 */
 
-/* WARNING: THIS PROJECT WHEN BOOTLOADED WILL CAUSE THE DEVICE TO NO LONGER 
-   BE PROGRAMMABLE VIA AN EXTERNAL PROGRAMMER.  Programming this project in
-   directly should not allow programming to be disabled.  A keyword must also
-   be typed into the terminal console for the programming disable to occur. */
+/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! WARNING !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+#warning "!!RUNNING THIS PROGRAM AND FOLLOWING THE STEPS OUTLINED IN THE CONSOLE WILL PERMANENTLY DISABLE DIRECT PROGRAMMING OF THE BOARD. FOR ADDITIONAL INFORMATION, SEE THE README.MD INCLUDED WITH THIS PROJECT AND THE FAMILY DATA SHEET LOCATED AT https://ww1.microchip.com/downloads/aemDocuments/documents/MCU16/ProductDocuments/DataSheets/dsPIC33CK1024MP710-Family-Data-Sheet-DS70005496.pdf"
 
 #include <stdio.h>
 #include <string.h>
@@ -65,16 +63,18 @@ int main(void)
         {
         }
     }
-    
-    PrintWarning();
-    
-    while (1)
+    else
     {
-        if (UART1_IsRxReady())
+        PrintWarning();
+
+        while (1)
         {
-            char receivedChar = UART1_Read();
-            ProcessReceivedChar(receivedChar, window, &windowIndex);
-            CheckForUnlockCommand(window, &windowIndex);
+            if (UART1_IsRxReady())
+            {
+                char receivedChar = UART1_Read();
+                ProcessReceivedChar(receivedChar, window, &windowIndex);
+                CheckForUnlockCommand(window, &windowIndex);
+            }
         }
     }
 }
