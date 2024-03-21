@@ -19,51 +19,20 @@
     THIS SOFTWARE.
  */
 #include "mcc_generated_files/system/system.h"
-#include "mcc_generated_files/flash/flash.h"
-#include "mcc_generated_files/flash/flash_types.h"
-#include "mcc_generated_files/boot/boot_config.h"
+#include "mcc_generated_files/system/pins.h"
 
 /*
     Main application
  */
 
-/* The following code finds the address used by GOTO instruction programmed 
- * at the reset vector in order to determine whether or not the application 
- * was downloaded directly or via the bootloader (i.e. if the address within the 
- * GOTO instruction is within the bootloader or application), as the ICSP 
- * inhibit functionality is only permitted if the application was 
- * downloaded via the bootloader.
- * 
- * The GOTO instruction contains two 24 bit words, the first of which contains 
- * the lower 15 bits of the address  and the second of which contains the upper 
- * 7 bits. The following code reads the GOTO address at the reset vector and 
- * parses the two words in order to determine the reset address. The opcode bits
- * in the GOTO instruction are masked. 
- * 
- * Refer to https://ww1.microchip.com/downloads/en/DeviceDoc/70000157g.pdf for 
- * additional details on the GOTO instruction format.   
- */
-static uint32_t GetResetAddress()
-{   
-    flash_data_t flashData[2];
-    FLASH_Read(0x000000, 2, flashData);
-    return (((flashData[1] & 0x0000007F)<<16) | (flashData[0] & 0x0000FFFE));
-}
-
-static bool WasLoadedByBootloader()
-{
-    return (GetResetAddress() < BOOT_CONFIG_PROGRAMMABLE_ADDRESS_LOW);
-}
-
 int main(void) {
+    unsigned int counter = 0;
 
     SYSTEM_Initialize();
-    
-    while (1) 
-    {
-        if (WasLoadedByBootloader()) 
-        {
-            // ICSP Inhibit
+
+    while (1) {
+        if ((counter++ % 0x8000) == 0) {
+            IO_RE9_Toggle();
         }
     }
 }
