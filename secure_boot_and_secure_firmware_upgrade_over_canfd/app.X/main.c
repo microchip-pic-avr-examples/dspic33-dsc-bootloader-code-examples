@@ -43,14 +43,14 @@
  * Refer to https://ww1.microchip.com/downloads/en/DeviceDoc/70000157g.pdf for 
  * additional details on the GOTO instruction format.   
  */
-uint32_t GetResetAddress()
+static uint32_t GetResetAddress()
 {   
     flash_data_t flashData[2];
     FLASH_Read(0x000000, 2, flashData);
     return (((flashData[1] & 0x0000007F)<<16) | (flashData[0] & 0x0000FFFE));
 }
 
-bool WasLoadedByBootloader()
+static bool WasLoadedByBootloader()
 {
     return (GetResetAddress() < BOOT_CONFIG_PROGRAMMABLE_ADDRESS_LOW);
 }
