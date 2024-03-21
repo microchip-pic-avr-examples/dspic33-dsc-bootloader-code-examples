@@ -123,7 +123,7 @@ static void CheckForUnlockCommand(char *window, int *windowIndex)
     {
         MoveCursor(5);
         ClearTerminalLine();
-        printf("Unlock command successful.\n");
+        printf("ICSP Programming/Debugging permanently disabled. \n");
         MoveCursor(10);
         ClearTerminalLine();
         *windowIndex = 0;
