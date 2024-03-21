@@ -10,6 +10,12 @@
         <logicalFolder name="boot" displayName="boot" projectFiles="true">
           <itemPath>mcc_generated_files/boot/boot_config.h</itemPath>
         </logicalFolder>
+        <logicalFolder name="flash" displayName="flash" projectFiles="true">
+          <itemPath>mcc_generated_files/flash/flash.h</itemPath>
+          <itemPath>mcc_generated_files/flash/flash_interface.h</itemPath>
+          <itemPath>mcc_generated_files/flash/flash_hardware.h</itemPath>
+          <itemPath>mcc_generated_files/flash/flash_types.h</itemPath>
+        </logicalFolder>
         <logicalFolder name="system" displayName="system" projectFiles="true">
           <itemPath>mcc_generated_files/system/reset_types.h</itemPath>
           <itemPath>mcc_generated_files/system/system_types.h</itemPath>
@@ -62,6 +68,12 @@
           <itemPath>mcc_generated_files/boot/signing_tool.jar</itemPath>
           <itemPath>mcc_generated_files/boot/app_code_protect.c</itemPath>
           <itemPath>mcc_generated_files/boot/combineAppAndBootloaderHex.sh</itemPath>
+        </logicalFolder>
+        <logicalFolder name="flash" displayName="flash" projectFiles="true">
+          <logicalFolder name="src" displayName="src" projectFiles="true">
+            <itemPath>mcc_generated_files/flash/src/flash_asm.s</itemPath>
+            <itemPath>mcc_generated_files/flash/src/flash.c</itemPath>
+          </logicalFolder>
         </logicalFolder>
         <logicalFolder name="system" displayName="system" projectFiles="true">
           <logicalFolder name="src" displayName="src" projectFiles="true">
