@@ -29,8 +29,10 @@
 #include "mcc_generated_files/flash/flash_types.h"
 #include "mcc_generated_files/boot/boot_config.h"
 
-#define WINDOW_SIZE 10
+#define USER_INPUT_BUFFER_SIZE 50
 #define UNLOCK_COMMAND "LOCKDEVICE"
+#define MATCHES 0
+#define ENTER '\r'
 
 // Function prototypes
 static void ClearTerminalScreen(void);
@@ -38,45 +40,102 @@ static void ClearTerminalLine(void);
 static void MoveCursor(int row);
 static void HideCursor(void);
 static void PrintWarning(void);
-static void AppendCharToWindow(char receivedChar, char *window, int *windowIndex);
-static void ProcessReceivedChar(char receivedChar, char *window, int *windowIndex);
-static void ResetWindowOnMismatch(char *window, int *windowIndex);
-static void CheckForUnlockCommand(char *window, int *windowIndex);
 static uint32_t GetResetAddress();
 static bool WasLoadedByBootloader();
 static void PrintBootloaderRequired(void);
+static char* ScanInput(void);
+static void DisableProgrammingPort(void);
+static void InvalidKeyword(void);
+static char userInput[USER_INPUT_BUFFER_SIZE] = {0};
+static bool ICSP_INHIBIT_IsEnabled(void);   //temp stub - replace with real version
 
 int main(void)
 {
-    char window[WINDOW_SIZE + 1] = {0};
-    int windowIndex = 0;
-
     SYSTEM_Initialize();
     HideCursor();
     ClearTerminalScreen();
     
-    if(WasLoadedByBootloader() == false)
+//    if(WasLoadedByBootloader() == false)
+//    {
+//        PrintBootloaderRequired();
+//        
+//        while(1)
+//        {
+//        }
+//    }
+//    else
     {
-        PrintBootloaderRequired();
+        const char* keyword = "LOCKDEVICE";
         
-        while(1)
-        {
-        }
-    }
-    else
-    {
         PrintWarning();
 
         while (1)
         {
-            if (UART1_IsRxReady())
+            char* userInput;
+                     
+            if(ICSP_INHIBIT_IsEnabled())
             {
-                char receivedChar = UART1_Read();
-                ProcessReceivedChar(receivedChar, window, &windowIndex);
-                CheckForUnlockCommand(window, &windowIndex);
+                printf("ICSP Programming/Debugging permanently disabled.");
+                
+                while(1)
+                {
+                }
+            }
+            
+            userInput = ScanInput();
+            
+            if(strcmp(userInput, keyword) == MATCHES)
+            {
+                DisableProgrammingPort();
+            }
+            else
+            {
+                InvalidKeyword();
             }
         }
     }
+}
+
+//temp stub - replace with real version
+static bool ICSP_INHIBIT_IsEnabled(void)
+{
+    return false;
+}
+
+static void InvalidKeyword(void)
+{
+    MoveCursor(10);
+    ClearTerminalLine();
+    MoveCursor(5);
+    ClearTerminalLine();
+    printf("Invalid character entered. Try again.");
+}
+
+static void DisableProgrammingPort(void)
+{
+    //ICSP_INHIBIT_Enable(true);
+}
+
+static char* ScanInput(void)
+{
+    uint8_t offset = 0;
+    char key;
+    
+    memset(userInput, 0, sizeof(userInput));
+    
+    do
+    {     
+        key = UART1_Read();
+        
+        if(key != ENTER)
+        {
+            userInput[offset++] = key;
+            printf("%c", key);
+        }
+    }
+    while((key != ENTER) && (offset < sizeof(userInput)));
+
+    return userInput;
 }
 
 static void ClearTerminalScreen(void)
@@ -111,53 +170,6 @@ static void PrintBootloaderRequired(void)
     MoveCursor(1);
     printf("NO BOOTLOADER DETECTED!\r\n\r\n");
     printf("Because programming will be permanently disabled, \r\na bootloader is required to run this demo. \r\nPlease see the readme.md for more information.");
-}
-
-static void ProcessReceivedChar(char receivedChar, char *window, int *windowIndex)
-{
-    bool isCharValid = (*windowIndex < strlen(UNLOCK_COMMAND)) && (receivedChar == UNLOCK_COMMAND[*windowIndex]);
-    
-    if (isCharValid)
-    {
-        AppendCharToWindow(receivedChar, window, windowIndex);
-        MoveCursor(10);
-        printf("%s", window);
-    }
-    else
-    {
-        ResetWindowOnMismatch(window, windowIndex);
-    }
-}
-
-static void AppendCharToWindow(char receivedChar, char *window, int *windowIndex)
-{
-    window[(*windowIndex)++] = receivedChar;
-    window[*windowIndex] = '\0';
-}
-
-static void ResetWindowOnMismatch(char *window, int *windowIndex)
-{
-    MoveCursor(10);
-    ClearTerminalLine();
-    MoveCursor(5);
-    ClearTerminalLine();
-    printf("Invalid character entered. Try again.");
-    *windowIndex = 0;
-    memset(window, 0, WINDOW_SIZE + 1); 
-}
-
-static void CheckForUnlockCommand(char *window, int *windowIndex)
-{
-    if (strncmp(window, UNLOCK_COMMAND, *windowIndex) == 0 && *windowIndex == strlen(UNLOCK_COMMAND))
-    {
-        MoveCursor(5);
-        ClearTerminalLine();
-        printf("ICSP Programming/Debugging permanently disabled. \n");
-        MoveCursor(10);
-        ClearTerminalLine();
-        *windowIndex = 0;
-        memset(window, 0, WINDOW_SIZE + 1);
-    }
 }
 
 /* The following code finds the address used by GOTO instruction programmed 
