@@ -81,7 +81,7 @@ The associated bootloader and application projects demonstrate the following:
 ![Clean and Build](./images/clean_and_build.png)
 3. The project should compile cleanly. app.X/dist/default/production/app.X.production.hex should be generated
 4. Verify that LED11 is still solid
-    a. If LED11 is blinking instead of solid, then the application code was programmed instead of only compiled. Go back to the “Programming the Bootloader” stage and re-program the bootloader
+    1. If LED11 is blinking instead of solid, then the application code was programmed instead of only compiled. Go back to the “Programming the Bootloader” stage and re-program the bootloader
 
 #### Loading the Application
 1. Open the Universal Bootloader Host Application tool (UBHA)<br>
@@ -93,25 +93,26 @@ The associated bootloader and application projects demonstrate the following:
 4. Select the “Settings->CAN” option from the top menu<br>
 ![UBHA CAN Settings Dropdown](./images/UBHA_Settings_CAN_Dropdown.png)
 5. Select the Peak protocol analyzer being used and the appropriate CAN configuration settings for this demo (listed below). When complete, press “Apply”: 
-    a. Nominal Bit Rate: 125.00 kbits/s
-    b. CAN-FD: enabled
-    c. CAN-FD TX Data Length: 8
-    d. Flexible Data Rate: Enabled 
-    e. Flexible Data Rate: 2Mbits/s
-    f. Message Format: Standard
-    g. Host to Device ID: 0xA1
-    h. Device to Host ID: 0xA2<br>
+    1. Nominal Bit Rate: 125.00 kbits/s
+    2. CAN-FD: enabled
+    3. CAN-FD TX Data Length: 8
+    4. Flexible Data Rate: Enabled 
+    5. Flexible Data Rate: 2Mbits/s
+    6. Message Format: Standard
+    7. Host to Device ID: 0xA1
+    8. Device to Host ID: 0xA2<br>
 ![CAN Settings](./images/UBHA_CAN_Settings.png)
 6. Press the "Read Device Settings" button
-    a. The Application start address and Application end address fields should have updated. If it did not or if you get a communication error, please go back to the “Programming the Bootloader” stage to make sure the bootloader was programmed correctly<br>
+    1. The Application start address and Application end address fields should have updated. If it did not or if you get a communication error, please go back to the “Programming the Bootloader” stage to make sure the bootloader was programmed correctly<br>
 ![Read Device Settings](./images/UBHA_Read_Device_Settings.png)
 7. Load the application hex file by selecting “File->Open/Load File (*.hex)”
-    a. Select app.X/dist/default/production/app.X.production.hex. This is included with the demo but may have been re-generated if Building the Application (Optional) was completed<br>
+    1. Select app.X/dist/default/production/app.X.production.hex. This is included with the demo but may have been re-generated if Building the Application (Optional) was completed<br>
 ![Open Hex File](./images/UBHA_Open_Hex.png)
 8. Check the "Enable Self Verification After Program" checkbox<br>
 ![Enable Verification](./images/UBHA_Enable_Verification.png)
 9. Press “Program Device”. The application should program erase, program and perform a self verify using the TA100 for an ECDSA verify then read back verify correctly.<br>**NOTE**: The reset response may not be fully transmitted before reset which may result in the reset response failing. The reset most likely did occur and the error can be safely ignored 
-    a. After a few seconds, LED11 should be blinking<br>
+    1. During the verification process, LED6 will be solid to indicate the image is being verified.
+    2. After the verification process is complete, LED6 will turn off.  If the image was verified, it will start to run and LED11 should be blinking.  If LED6 is still solid, the image failed verification and is still in bootload mode.<br>
 ![Program Device](./images/UBHA_Program.png)
 
 #### Re-Entering Bootloader Mode
