@@ -18,7 +18,12 @@
     EXCEED AMOUNT OF FEES, IF ANY, YOU PAID DIRECTLY TO MICROCHIP FOR 
     THIS SOFTWARE.
 */
- 
+
+/* WARNING: THIS PROJECT WHEN BOOTLOADED WILL CAUSE THE DEVICE TO NO LONGER 
+   BE PROGRAMMABLE VIA AN EXTERNAL PROGRAMMER.  Programming this project in
+   directly should not allow programming to be disabled.  A keyword must also
+   be typed into the terminal console for the programming disable to occur. */
+
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
@@ -41,6 +46,7 @@ static void ResetWindowOnMismatch(char *window, int *windowIndex);
 static void CheckForUnlockCommand(char *window, int *windowIndex);
 static uint32_t GetResetAddress();
 static bool WasLoadedByBootloader();
+static void PrintBootloaderRequired(void);
 
 int main(void)
 {
@@ -48,8 +54,20 @@ int main(void)
     int windowIndex = 0;
 
     SYSTEM_Initialize();
+    HideCursor();
     ClearTerminalScreen();
+    
+    if(WasLoadedByBootloader() == false)
+    {
+        PrintBootloaderRequired();
+        
+        while(1)
+        {
+        }
+    }
+    
     PrintWarning();
+    
     while (1)
     {
         if (UART1_IsRxReady())
@@ -84,9 +102,15 @@ static void HideCursor(void)
 static void PrintWarning(void)
 {
     MoveCursor(1);
-    printf("Type LOCKDEVICE to enable the ICSP Inhibit feature.");
-    MoveCursor(3);
+    printf("Type LOCKDEVICE to enable the ICSP Inhibit feature.\r\n\r\n");
     printf("WARNING: THIS PERMANENTLY DISABLES DIRECT PROGRAMMING OF THE BOARD.");
+}
+
+static void PrintBootloaderRequired(void)
+{
+    MoveCursor(1);
+    printf("NO BOOTLOADER DETECTED!\r\n\r\n");
+    printf("Because programming will be permanently disabled, \r\na bootloader is required to run this demo. \r\nPlease see the readme.md for more information.");
 }
 
 static void ProcessReceivedChar(char receivedChar, char *window, int *windowIndex)
