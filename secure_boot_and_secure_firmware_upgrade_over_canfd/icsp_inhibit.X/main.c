@@ -38,23 +38,28 @@
 static void ClearTerminalScreen(void);
 static void ClearTerminalLine(void);
 static void MoveCursor(int row);
-static void HideCursor(void);
+static void EnableCursor(bool enable);
 static void PrintWarning(void);
 static uint32_t GetResetAddress();
 static bool WasLoadedByBootloader();
 static void PrintBootloaderRequired(void);
-static char* ScanInput(void);
+static char* ScanINPUT(void);
 static void DisableProgrammingPort(void);
 static void InvalidKeyword(void);
+static void PrintProgrammingDisabled(void);
+
+// Local Variables
 static char userInput[USER_INPUT_BUFFER_SIZE] = {0};
 static bool ICSP_INHIBIT_IsEnabled(void);   //temp stub - replace with real version
+static bool ICSP_INHIBIT_Enable();          //temp stub - replace with real version
+static bool errorPresent = false;
+static bool icspEnabled = false;
+
 
 int main(void)
 {
     SYSTEM_Initialize();
-    HideCursor();
-    ClearTerminalScreen();
-    
+        
 //    if(WasLoadedByBootloader() == false)
 //    {
 //        PrintBootloaderRequired();
@@ -75,14 +80,14 @@ int main(void)
                      
             if(ICSP_INHIBIT_IsEnabled())
             {
-                printf("ICSP Programming/Debugging permanently disabled.");
+                PrintProgrammingDisabled();
                 
                 while(1)
                 {
                 }
             }
             
-            userInput = ScanInput();
+            userInput = ScanINPUT();
             
             if(strcmp(userInput, keyword) == MATCHES)
             {
@@ -96,27 +101,50 @@ int main(void)
     }
 }
 
+static void PrintProgrammingDisabled(void)
+{
+    EnableCursor(false);
+    MoveCursor(1);
+    ClearTerminalScreen();
+            
+    printf("\r\n");
+    printf("\r\n");
+    printf("\r\n");
+    printf("*** ICSP Programming/Debugging permanently disabled. ***\r\n");
+    printf("\r\n");
+    printf("Use the bootloader to load all future applications into this board.");
+}
+
 //temp stub - replace with real version
 static bool ICSP_INHIBIT_IsEnabled(void)
 {
-    return false;
+    return icspEnabled;
+}
+
+static bool ICSP_INHIBIT_Enable()
+{
+    icspEnabled = true;
 }
 
 static void InvalidKeyword(void)
 {
-    MoveCursor(10);
+    MoveCursor(7);
     ClearTerminalLine();
+    printf("Invalid keyword entered. Try again.");
+    errorPresent = true;
+    
     MoveCursor(5);
     ClearTerminalLine();
-    printf("Invalid character entered. Try again.");
+    printf(">> ");
+    
 }
 
 static void DisableProgrammingPort(void)
 {
-    //ICSP_INHIBIT_Enable(true);
+    ICSP_INHIBIT_Enable();
 }
 
-static char* ScanInput(void)
+static char* ScanINPUT(void)
 {
     uint8_t offset = 0;
     char key;
@@ -126,6 +154,15 @@ static char* ScanInput(void)
     do
     {     
         key = UART1_Read();
+        
+        if(errorPresent)
+        {
+            MoveCursor(7);
+            ClearTerminalLine();
+            MoveCursor(5);
+            printf(">> ");
+            errorPresent = false;
+        }
         
         if(key != ENTER)
         {
@@ -153,23 +190,42 @@ static void MoveCursor(int row)
     printf("\033[%d;0f", row);
 }
 
-static void HideCursor(void)
+
+/*
+ * "\033[?25h" for cursor enable
+ * "\033[?25l" for cursor disable
+ */
+static void EnableCursor(bool enable)
 {
-    printf("\033[?25l");
+    printf("\033[?25%c", enable ? 'h' : 'l');
 }
 
 static void PrintWarning(void)
 {
+    EnableCursor(false);
     MoveCursor(1);
-    printf("Type LOCKDEVICE to enable the ICSP Inhibit feature.\r\n\r\n");
-    printf("WARNING: THIS PERMANENTLY DISABLES DIRECT PROGRAMMING OF THE BOARD.");
+    ClearTerminalScreen();
+    
+    printf("Type LOCKDEVICE (plus ENTER) to enable the ICSP Inhibit feature.\r\n");
+    printf("\r\n");
+    printf("WARNING: THIS PERMANENTLY DISABLES DIRECT PROGRAMMING OF THE BOARD.\r\n");
+    printf("\r\n");
+    printf(">> ");
+    
+    EnableCursor(true);
 }
 
 static void PrintBootloaderRequired(void)
 {
+    EnableCursor(false);
     MoveCursor(1);
-    printf("NO BOOTLOADER DETECTED!\r\n\r\n");
-    printf("Because programming will be permanently disabled, \r\na bootloader is required to run this demo. \r\nPlease see the readme.md for more information.");
+    ClearTerminalScreen();
+    
+    printf("NO BOOTLOADER DETECTED!\r\n");
+    printf("\r\n");
+    printf("Because programming will be permanently disabled, \r\n");
+    printf("a bootloader is required to run this demo. \r\n");
+    printf("Please see the readme.md for more information.\r\n");
 }
 
 /* The following code finds the address used by GOTO instruction programmed 
