@@ -25,6 +25,8 @@
 #include "mcc_generated_files/flash/flash.h"
 #include "mcc_generated_files/flash/flash_types.h"
 #include "mcc_generated_files/boot/boot_config.h"
+#include "mcc_generated_files/uart/uart1.h"
+#include "mcc_generated_files/system/system.h"
 #include "icsp_inhibit.h"
 #include "terminal.h"
 
@@ -34,18 +36,23 @@
 
 #define USER_INPUT_BUFFER_SIZE 50
 #define UNLOCK_COMMAND "LOCKDEVICE"
-#define MATCHES 0
+#define STRCMP_MATCHES 0
 #define ENTER '\r'
+#define TERMINAL_LINE_ERROR 7
+#define TERMINAL_LINE_INPUT 5
+#define TERMINAL_LINE_HOME 1
 
 // Function prototypes
 static void PrintWarning(void);
 static uint32_t GetResetAddress();
 static bool WasLoadedByBootloader();
 static void PrintBootloaderRequired(void);
-static char* ScanINPUT(void);
-static void DisableProgrammingPort(void);
+static char* ScanInput(void);
 static void PrintErrorMessage(char* error);
 static void PrintProgrammingDisabled(void);
+static void ClearUserInput(void);
+static void ClearErrorMessage(void);
+static void ResetPrompt(void);
 
 // Local Variables
 static char userInput[USER_INPUT_BUFFER_SIZE] = {0};
@@ -57,14 +64,14 @@ int main(void)
 
     SYSTEM_Initialize();
     
-//    if(WasLoadedByBootloader() == false)
-//    {
-//        PrintBootloaderRequired();
-//        
-//        while(1)
-//        {
-//        }
-//    }
+    if(WasLoadedByBootloader() == false)
+    {
+        PrintBootloaderRequired();
+        
+        while(1)
+        {
+        }
+    }
     
     if(ICSP_INHIBIT_IsEnabled())
     {
@@ -79,11 +86,11 @@ int main(void)
 
     while (1)
     {
-        char* userInput = ScanINPUT();
+        char* userInput = ScanInput();
 
-        if(strcmp(userInput, keyword) == MATCHES)
+        if(strcmp(userInput, keyword) == STRCMP_MATCHES)
         {
-            DisableProgrammingPort();
+            ICSP_INHIBIT_Enable();
 
             PrintProgrammingDisabled();
 
@@ -98,10 +105,40 @@ int main(void)
     }
 }
 
+static char* ScanInput(void)
+{
+    uint8_t userInputOffset = 0;
+    char key;
+    
+    ClearUserInput();
+    
+    do
+    {     
+        key = UART1_Read();
+        
+        /* If there is still an error message after the first user key press,
+         * clear the error and reset the prompt before printing their input. */
+        if(errorPresent)
+        {
+            ClearErrorMessage();
+            ResetPrompt();
+        }
+        
+        if((key != ENTER) && (userInputOffset < sizeof(userInput)))
+        {
+            userInput[userInputOffset++] = key;
+            printf("%c", key);
+        }
+    }
+    while(key != ENTER);
+
+    return userInput;
+}
+
 static void PrintProgrammingDisabled(void)
 {
     TERMINAL_EnableCursor(false);
-    TERMINAL_MoveCursor(1);
+    TERMINAL_MoveCursor(TERMINAL_LINE_HOME);
     TERMINAL_ClearScreen();
             
     printf("\r\n");
@@ -112,14 +149,9 @@ static void PrintProgrammingDisabled(void)
     printf("Use the bootloader to load all future applications into this board.");
 }
 
-static void DisableProgrammingPort(void)
-{
-    ICSP_INHIBIT_Enable();
-}
-
 static void ClearErrorMessage(void)
 {
-    TERMINAL_MoveCursor(7);
+    TERMINAL_MoveCursor(TERMINAL_LINE_ERROR);
     TERMINAL_ClearLine();
         
     errorPresent = false;
@@ -127,7 +159,7 @@ static void ClearErrorMessage(void)
 
 static void ResetPrompt(void)
 {
-    TERMINAL_MoveCursor(5);
+    TERMINAL_MoveCursor(TERMINAL_LINE_INPUT);
     TERMINAL_ClearLine();
     printf(">> ");
 }
@@ -147,38 +179,10 @@ static void ClearUserInput(void)
     memset(userInput, 0, sizeof(userInput));
 }
 
-static char* ScanINPUT(void)
-{
-    uint8_t offset = 0;
-    char key;
-    
-    ClearUserInput();
-    
-    do
-    {     
-        key = UART1_Read();
-        
-        if(errorPresent)
-        {
-            ClearErrorMessage();
-            ResetPrompt();
-        }
-        
-        if(key != ENTER)
-        {
-            userInput[offset++] = key;
-            printf("%c", key);
-        }
-    }
-    while((key != ENTER) && (offset < sizeof(userInput)));
-
-    return userInput;
-}
-
 static void PrintWarning(void)
 {
     TERMINAL_EnableCursor(false);
-    TERMINAL_MoveCursor(1);
+    TERMINAL_MoveCursor(TERMINAL_LINE_HOME);
     TERMINAL_ClearScreen();
     
     printf("Type LOCKDEVICE (plus ENTER) to enable the ICSP Inhibit feature.\r\n");
@@ -193,7 +197,7 @@ static void PrintWarning(void)
 static void PrintBootloaderRequired(void)
 {
     TERMINAL_EnableCursor(false);
-    TERMINAL_MoveCursor(1);
+    TERMINAL_MoveCursor(TERMINAL_LINE_HOME);
     TERMINAL_ClearScreen();
     
     printf("NO BOOTLOADER DETECTED!\r\n");
