@@ -33,6 +33,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
+#include <ctype.h>
 
 #define USER_INPUT_BUFFER_SIZE 50
 #define UNLOCK_COMMAND "LOCKDEVICE"
@@ -84,7 +85,7 @@ int main(void)
             
     PrintWarning();
 
-    while (1)
+    while(1)
     {
         char* userInput = ScanInput();
 
@@ -124,7 +125,7 @@ static char* ScanInput(void)
             ResetPrompt();
         }
         
-        if((key != ENTER) && (userInputOffset < sizeof(userInput)))
+        if(isalnum(key) && (userInputOffset < sizeof(userInput)))
         {
             userInput[userInputOffset++] = key;
             printf("%c", key);
