@@ -42,7 +42,7 @@ All software and hardware are the same as those used in boot.X and app.X. See th
 ![Clean and Build](../images/clean_and_build.png)
 3. The project should compile cleanly. icsp_inhibit.X/dist/default/production/icsp_inhibit.X.production.hex should be generated
 4. Verify that LED11 is still solid
-    a. If LED11 is blinking instead of solid, then the application code was programmed instead of only compiled. Go back to the “Programming the Bootloader” stage and re-program the bootloader
+    a. If LED11 is not longer solid, then the application code was programmed instead of only compiled. Go back to the “Programming the Bootloader” stage and re-program the bootloader
 
 #### Loading the Application
 **NOTE: The ICSP inhibit functionality will only be programmed once the steps in Locking the Device have been completed successfully. The steps listed in this section (Loading the Application) will not permanentley alter the device**
@@ -69,9 +69,9 @@ All software and hardware are the same as those used in boot.X and app.X. See th
 ![Read Device Settings](../images/UBHA_Read_Device_Settings.png)
 7. Load the application hex file by selecting “File->Open/Load File (*.hex)”
     a. Select the file generated in the previous section: icsp_inhibit.X/dist/default/production/icsp_inhibit.X.production.hex<br>
-![Open Hex File](./images/UBHA_Open_Hex.png)
+![Open Hex File](../images/UBHA_Open_Hex.png)
 8. Check the "Enable Self Verification After Program" checkbox<br>
-![Enable Verification](../images/UBHA_Enable_Verification.png)
+![Enable Verification](./images/UBHA_Enable_Self_Verification.PNG)
 9. Press “Program Device”. The application should program erase, program and perform a self verify using the TA100 for an ECDSA verify then read back verify correctly.<br>**NOTE**: The reset response may not be fully transmitted before reset which may result in the reset response failing. The reset most likely did occur and the error can be safely ignored<br>
 ![Program Device](../images/UBHA_Program.png)
 
