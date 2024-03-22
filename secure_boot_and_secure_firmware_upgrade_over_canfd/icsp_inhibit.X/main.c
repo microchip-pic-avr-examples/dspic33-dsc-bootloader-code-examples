@@ -22,12 +22,15 @@
 /*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! WARNING !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
 #warning "!!RUNNING THIS PROGRAM AND FOLLOWING THE STEPS OUTLINED IN THE CONSOLE WILL PERMANENTLY DISABLE DIRECT PROGRAMMING OF THE BOARD. FOR ADDITIONAL INFORMATION, SEE THE README.MD INCLUDED WITH THIS PROJECT AND THE FAMILY DATA SHEET LOCATED AT https://ww1.microchip.com/downloads/aemDocuments/documents/MCU16/ProductDocuments/DataSheets/dsPIC33CK1024MP710-Family-Data-Sheet-DS70005496.pdf"
 
-#include <stdio.h>
-#include <string.h>
-#include <stdbool.h>
 #include "mcc_generated_files/flash/flash.h"
 #include "mcc_generated_files/flash/flash_types.h"
 #include "mcc_generated_files/boot/boot_config.h"
+#include "icsp_inhibit.h"
+#include "terminal.h"
+
+#include <stdio.h>
+#include <string.h>
+#include <stdbool.h>
 
 #define USER_INPUT_BUFFER_SIZE 50
 #define UNLOCK_COMMAND "LOCKDEVICE"
@@ -35,31 +38,25 @@
 #define ENTER '\r'
 
 // Function prototypes
-static void ClearTerminalScreen(void);
-static void ClearTerminalLine(void);
-static void MoveCursor(int row);
-static void EnableCursor(bool enable);
 static void PrintWarning(void);
 static uint32_t GetResetAddress();
 static bool WasLoadedByBootloader();
 static void PrintBootloaderRequired(void);
 static char* ScanINPUT(void);
 static void DisableProgrammingPort(void);
-static void InvalidKeyword(void);
+static void PrintErrorMessage(char* error);
 static void PrintProgrammingDisabled(void);
 
 // Local Variables
 static char userInput[USER_INPUT_BUFFER_SIZE] = {0};
-static bool ICSP_INHIBIT_IsEnabled(void);   //temp stub - replace with real version
-static bool ICSP_INHIBIT_Enable();          //temp stub - replace with real version
 static bool errorPresent = false;
-static bool icspEnabled = false;
-
 
 int main(void)
 {
+    const char* keyword = "LOCKDEVICE";
+
     SYSTEM_Initialize();
-        
+    
 //    if(WasLoadedByBootloader() == false)
 //    {
 //        PrintBootloaderRequired();
@@ -68,44 +65,44 @@ int main(void)
 //        {
 //        }
 //    }
-//    else
+    
+    if(ICSP_INHIBIT_IsEnabled())
     {
-        const char* keyword = "LOCKDEVICE";
-        
-        PrintWarning();
+        PrintProgrammingDisabled();
 
-        while (1)
+        while(1)
         {
-            char* userInput;
-                     
-            if(ICSP_INHIBIT_IsEnabled())
-            {
-                PrintProgrammingDisabled();
-                
-                while(1)
-                {
-                }
-            }
+        }
+    }
             
-            userInput = ScanINPUT();
-            
-            if(strcmp(userInput, keyword) == MATCHES)
+    PrintWarning();
+
+    while (1)
+    {
+        char* userInput = ScanINPUT();
+
+        if(strcmp(userInput, keyword) == MATCHES)
+        {
+            DisableProgrammingPort();
+
+            PrintProgrammingDisabled();
+
+            while(1)
             {
-                DisableProgrammingPort();
             }
-            else
-            {
-                InvalidKeyword();
-            }
+        }
+        else
+        {
+            PrintErrorMessage("Invalid keyword entered. Try again.");
         }
     }
 }
 
 static void PrintProgrammingDisabled(void)
 {
-    EnableCursor(false);
-    MoveCursor(1);
-    ClearTerminalScreen();
+    TERMINAL_EnableCursor(false);
+    TERMINAL_MoveCursor(1);
+    TERMINAL_ClearScreen();
             
     printf("\r\n");
     printf("\r\n");
@@ -115,33 +112,39 @@ static void PrintProgrammingDisabled(void)
     printf("Use the bootloader to load all future applications into this board.");
 }
 
-//temp stub - replace with real version
-static bool ICSP_INHIBIT_IsEnabled(void)
-{
-    return icspEnabled;
-}
-
-static bool ICSP_INHIBIT_Enable()
-{
-    icspEnabled = true;
-}
-
-static void InvalidKeyword(void)
-{
-    MoveCursor(7);
-    ClearTerminalLine();
-    printf("Invalid keyword entered. Try again.");
-    errorPresent = true;
-    
-    MoveCursor(5);
-    ClearTerminalLine();
-    printf(">> ");
-    
-}
-
 static void DisableProgrammingPort(void)
 {
     ICSP_INHIBIT_Enable();
+}
+
+static void ClearErrorMessage(void)
+{
+    TERMINAL_MoveCursor(7);
+    TERMINAL_ClearLine();
+        
+    errorPresent = false;
+}
+
+static void ResetPrompt(void)
+{
+    TERMINAL_MoveCursor(5);
+    TERMINAL_ClearLine();
+    printf(">> ");
+}
+
+static void PrintErrorMessage(char* errorMessage)
+{
+    ClearErrorMessage();
+    
+    printf("%s", errorMessage);
+    errorPresent = true;
+    
+    ResetPrompt();
+}
+
+static void ClearUserInput(void)
+{
+    memset(userInput, 0, sizeof(userInput));
 }
 
 static char* ScanINPUT(void)
@@ -149,7 +152,7 @@ static char* ScanINPUT(void)
     uint8_t offset = 0;
     char key;
     
-    memset(userInput, 0, sizeof(userInput));
+    ClearUserInput();
     
     do
     {     
@@ -157,11 +160,8 @@ static char* ScanINPUT(void)
         
         if(errorPresent)
         {
-            MoveCursor(7);
-            ClearTerminalLine();
-            MoveCursor(5);
-            printf(">> ");
-            errorPresent = false;
+            ClearErrorMessage();
+            ResetPrompt();
         }
         
         if(key != ENTER)
@@ -175,36 +175,11 @@ static char* ScanINPUT(void)
     return userInput;
 }
 
-static void ClearTerminalScreen(void)
-{
-    printf("\033[2J");
-}
-
-static void ClearTerminalLine(void)
-{
-    printf("\33[2K\r");
-}
-
-static void MoveCursor(int row)
-{
-    printf("\033[%d;0f", row);
-}
-
-
-/*
- * "\033[?25h" for cursor enable
- * "\033[?25l" for cursor disable
- */
-static void EnableCursor(bool enable)
-{
-    printf("\033[?25%c", enable ? 'h' : 'l');
-}
-
 static void PrintWarning(void)
 {
-    EnableCursor(false);
-    MoveCursor(1);
-    ClearTerminalScreen();
+    TERMINAL_EnableCursor(false);
+    TERMINAL_MoveCursor(1);
+    TERMINAL_ClearScreen();
     
     printf("Type LOCKDEVICE (plus ENTER) to enable the ICSP Inhibit feature.\r\n");
     printf("\r\n");
@@ -212,14 +187,14 @@ static void PrintWarning(void)
     printf("\r\n");
     printf(">> ");
     
-    EnableCursor(true);
+    TERMINAL_EnableCursor(true);
 }
 
 static void PrintBootloaderRequired(void)
 {
-    EnableCursor(false);
-    MoveCursor(1);
-    ClearTerminalScreen();
+    TERMINAL_EnableCursor(false);
+    TERMINAL_MoveCursor(1);
+    TERMINAL_ClearScreen();
     
     printf("NO BOOTLOADER DETECTED!\r\n");
     printf("\r\n");
