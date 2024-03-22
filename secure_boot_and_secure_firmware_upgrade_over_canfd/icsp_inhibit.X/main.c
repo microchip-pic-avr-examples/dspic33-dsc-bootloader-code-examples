@@ -90,7 +90,7 @@ int main(void)
 
         if(strcmp(userInput, keyword) == STRCMP_MATCHES)
         {
-            ICSP_INHIBIT_Enable();
+            //ICSP_INHIBIT_Enable();        //Disable during development for safety
 
             PrintProgrammingDisabled();
 
