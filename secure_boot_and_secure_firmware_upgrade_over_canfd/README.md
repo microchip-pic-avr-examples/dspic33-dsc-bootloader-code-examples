@@ -40,16 +40,22 @@ The associated bootloader and application projects demonstrate the following:
 * A CAN cable
 * A CAN-FD bus terminator (or modify the Peak analyzer per their user's guide for proper CAN-FD termination)
 * A micro USB cable, a USB-Type C cable, or a 9v power adapter for the dsPIC33C Touch CAN LIN Curiosity Development Board (for powering the board)
-* [TA100 Trust Anchor External HSM 8-Pin SOIC](https://www.microchip.com/en-us/product/ta100)
+* [TA100 Trust Anchor External HSM 8-Pin SOIC](https://www.microchip.com/en-us/product/ta100) - NOTE: make sure to get the **SPI** variant for this demo.
 * [TA100 8-Pin SOIC CryptoAutomotive™ Socket Board](https://www.microchip.com/en-us/development-tool/AC164167)
 
 ## Running the Demo
 
 ##### Hardware Setup
-1. With the Development Board detached from any power source, programmer, or USB connection, connect the TA100 8-Pin SOIC CryptoAutomotive™ Socket board into the mikroBUS™ A slot with the jumpers set for SPI
-2. Connect the Peak analyzer/generator to your computer
-3. Connect the Peak analyzer/generator to the CAN/CAN-FD Driver Circuit on the Development Board
-4. Connect the micro-USB cable to port J1 of the Development Board to the host computer.<br>
+1. Insert the TA100 into the TA100 8-Pin SOIC CryptoAutomotive™ Socket board.  **NOTE** - make sure to align the TA100 pin 1 indicator with the pin 1 indicator on the socket board silkscreen.<br>
+![TA100 Socket Alignment](./images/socket_pin_1.png)
+2. Short the J10 jumper to the "3.3v" option.<br>
+![Power Jumper](./images/socket_power_jumper.png)
+3. Switch all the jumpers on the TA100 8-Pin SOIC CryptoAutomotive™ Socket board to the SPI setting (J3, J4, J5, J6, J7).<br>
+![SPI Jumpers](./images/socket_spi_jumper.png)
+4. With the Development Board detached from any power source, programmer, or USB connection, connect the TA100 8-Pin SOIC CryptoAutomotive™ Socket board into the mikroBUS™ A slot with the jumpers set for SPI.
+5. Connect the Peak analyzer/generator to your computer.
+6. Connect the Peak analyzer/generator to the CAN/CAN-FD Driver Circuit on the Development Board.
+7. Connect the micro-USB cable to port J1 of the Development Board to the host computer.<br>
 
 ![Hardware Setup](./images/hardware_setup.png)
 
@@ -60,7 +66,7 @@ The associated bootloader and application projects demonstrate the following:
 ![Force Update](./images/MCC_Force_Update.png)
 4. Click "Generate"<br>
 ![Generate](./images/MCC_Generate.png)
-5. Accept all incoming code changes for files **within the CryptoAuthenticationLibrary directory** by selecting "Replace All" in the merge helper UI. **NOTE: DO NOT accept incoming changes for boot_demo.c. Accept all other file changes and close out of MCC**<br>
+5. Accept all incoming code changes for files **within the CryptoAuthenticationLibrary directory** by selecting "Replace All" in the merge helper UI<br> **NOTE: DO NOT accept incoming changes for boot_demo.c. Accept all other file changes and close out of MCC**<br>
 ![Merge Resolution](./images/MCC_Merge_Resolution.png)
 6. Press the “Make and Program” button on the top bar<br>
 ![Make and Program Device](./images/make_and_program.png)
@@ -68,13 +74,14 @@ The associated bootloader and application projects demonstrate the following:
 8. The project should compile and program successfully
 9. Verify the LED11 is solid on the Development Board. This indicates the bootloader is running
     
-#### Building the Application
+#### Building the Application (Optional)
+**NOTE**: A pre-generated .hex file has been included with this demo, therefore the following steps are **optional**
 1. Open the app.X project in MPLAB® X
-2. Press the “Clean and Build Project” button on the top bar. **NOTE**: Make sure not to hit the program button. This will program the application code over the bootloader that was just programmed<br>
+2. Click the dropdown arrow next to the “Clean and Build Project” button on the top bar and select "Clean and Build Project" <br>**NOTE**: If "Clean and Build for Debugging" is selected instead, a new hex file will not be generated <br>**NOTE**: Make sure not to hit the program button. This will program the application code over the bootloader that was just programmed<br>
 ![Clean and Build](./images/clean_and_build.png)
 3. The project should compile cleanly. app.X/dist/default/production/app.X.production.hex should be generated
 4. Verify that LED11 is still solid
-    a. If LED11 is blinking instead of solid, then the application code was programmed instead of only compiled. Go back to the “Programming the Bootloader” stage and re-program the bootloader
+    1. If LED11 is blinking instead of solid, then the application code was programmed instead of only compiled. Go back to the “Programming the Bootloader” stage and re-program the bootloader
 
 #### Loading the Application
 1. Open the Universal Bootloader Host Application tool (UBHA)<br>
@@ -86,26 +93,35 @@ The associated bootloader and application projects demonstrate the following:
 4. Select the “Settings->CAN” option from the top menu<br>
 ![UBHA CAN Settings Dropdown](./images/UBHA_Settings_CAN_Dropdown.png)
 5. Select the Peak protocol analyzer being used and the appropriate CAN configuration settings for this demo (listed below). When complete, press “Apply”: 
-    a. Nominal Bit Rate: 125.00 kbits/s
-    b. CAN-FD: enabled
-    c. CAN-FD TX Data Length: 8
-    d. Flexible Data Rate: Enabled 
-    e. Flexible Data Rate: 2Mbits/s
-    f. Message Format: Standard
-    g. Host to Device ID: 0xA1
-    h. Device to Host ID: 0xA2<br>
+    1. Nominal Bit Rate: 125.00 kbits/s
+    2. CAN-FD: enabled
+    3. CAN-FD TX Data Length: 8
+    4. Flexible Data Rate: Enabled 
+    5. Flexible Data Rate: 2Mbits/s
+    6. Message Format: Standard
+    7. Host to Device ID: 0xA1
+    8. Device to Host ID: 0xA2<br>
 ![CAN Settings](./images/UBHA_CAN_Settings.png)
 6. Press the "Read Device Settings" button
-    a. The Application start address and Application end address fields should have updated. If it did not or if you get a communication error, please go back to the “Programming the Bootloader” stage to make sure the bootloader was programmed correctly<br>
+    1. The Application start address and Application end address fields should have updated. If it did not or if you get a communication error, please go back to the “Programming the Bootloader” stage to make sure the bootloader was programmed correctly<br>
 ![Read Device Settings](./images/UBHA_Read_Device_Settings.png)
 7. Load the application hex file by selecting “File->Open/Load File (*.hex)”
-    a. Select the file generated in the previous section: app.X/dist/default/production/app.X.production.hex<br>
+    1. Select app.X/dist/default/production/app.X.production.hex. This is included with the demo but may have been re-generated if Building the Application (Optional) was completed<br>
 ![Open Hex File](./images/UBHA_Open_Hex.png)
 8. Check the "Enable Self Verification After Program" checkbox<br>
 ![Enable Verification](./images/UBHA_Enable_Verification.png)
-9. Press “Program Device”. The application should program erase, program and perform a self verify using the TA100 for an ECDSA verify then read back verify correctly. Note: The reset response may not be fully transmitted before reset which may result in the reset response failing. The reset most likely did occur and the error can be safely ignored. 
-    a. After a few seconds, LED11 should be blinking<br>
+9. Press “Program Device”. The application should program erase, program and perform a self verify using the TA100 for an ECDSA verify then read back verify correctly.<br>**NOTE**: The reset response may not be fully transmitted before reset which may result in the reset response failing. The reset most likely did occur and the error can be safely ignored 
+    1. During the verification process, LED6 will be solid to indicate the image is being verified.
+    2. After the verification process is complete, LED6 will turn off.  If the image was verified, it will start to run and LED11 should be blinking.  If LED6 is still solid, the image failed verification and is still in bootload mode.<br>
 ![Program Device](./images/UBHA_Program.png)
+
+#### Re-Entering Bootloader Mode
+1. Power off the board by unplugging the micro-USB cable from port J1
+2. While the board is powered off, hold down switch S1<br>
+![S1](./images/switch_location.png)
+3. Continue holding down S1 and plug the micro-USB cable back into port J1
+4. Once the board is powered back on, release S1
+5. Verify LED11 is solid, indicating the device is in bootloader mode. The application can now be loaded once again (see Loading the Application) 
 
 ## Trademarks
 

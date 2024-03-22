@@ -28,11 +28,73 @@
         <logicalFolder name="CryptoAuthenticationLibrary"
                        displayName="CryptoAuthenticationLibrary"
                        projectFiles="true">
+          <logicalFolder name="atcacert" displayName="atcacert" projectFiles="true">
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atcacert/atcacert_der.h</itemPath>
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atcacert/atcacert_client.h</itemPath>
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atcacert/atcacert_def.h</itemPath>
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atcacert/atcacert_pem.h</itemPath>
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atcacert/atcacert.h</itemPath>
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atcacert/atcacert_check_config.h</itemPath>
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atcacert/atcacert_host_hw.h</itemPath>
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atcacert/atcacert_host_sw.h</itemPath>
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atcacert/atcacert_date.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="calib" displayName="calib" projectFiles="true">
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/calib/calib_device.h</itemPath>
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/calib/calib_basic.h</itemPath>
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/calib/calib_execution.h</itemPath>
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/calib/calib_command.h</itemPath>
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/calib/calib_aes_gcm.h</itemPath>
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/calib/calib_config_check.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="crypto" displayName="crypto" projectFiles="true">
+            <logicalFolder name="hashes" displayName="hashes" projectFiles="true">
+              <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/crypto/hashes/sha1_routines.h</itemPath>
+              <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/crypto/hashes/sha2_routines.h</itemPath>
+            </logicalFolder>
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/crypto/atca_crypto_sw.h</itemPath>
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/crypto/atca_crypto_sw_sha1.h</itemPath>
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/crypto/atca_crypto_sw_sha2.h</itemPath>
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/crypto/crypto_config_check.h</itemPath>
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/crypto/atca_crypto_hw_aes.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="hal" displayName="hal" projectFiles="true">
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/hal/atca_start_iface.h</itemPath>
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/hal/atca_hal.h</itemPath>
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/hal/swi_uart_samd21_asf.h</itemPath>
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/hal/atca_start_config.h</itemPath>
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/hal/kit_protocol.h</itemPath>
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/hal/swi_uart_start.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="host" displayName="host" projectFiles="true">
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/host/atca_host.h</itemPath>
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/host/atca_host_config_check.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="talib" displayName="talib" projectFiles="true">
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/talib/talib_crc.h</itemPath>
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/talib/talib_fce.h</itemPath>
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/talib/talib_config_check.h</itemPath>
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/talib/talib_packet.h</itemPath>
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/talib/talib_status.h</itemPath>
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/talib/talib_execution.h</itemPath>
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/talib/talib_basic.h</itemPath>
+            <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/talib/talib_defines.h</itemPath>
+          </logicalFolder>
           <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atca_basic.h</itemPath>
           <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/cryptoauthlib.h</itemPath>
           <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/CryptoAuth_init.h</itemPath>
           <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atca_config.h</itemPath>
           <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atca_iface.h</itemPath>
+          <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atca_status.h</itemPath>
+          <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atca_cfgs.h</itemPath>
+          <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atca_config_check.h</itemPath>
+          <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atca_debug.h</itemPath>
+          <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atca_device.h</itemPath>
+          <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atca_devtypes.h</itemPath>
+          <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atca_version.h</itemPath>
+          <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atca_helpers.h</itemPath>
+          <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atca_compiler.h</itemPath>
+          <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atca_platform.h</itemPath>
         </logicalFolder>
         <logicalFolder name="flash" displayName="flash" projectFiles="true">
           <itemPath>mcc_generated_files/flash/flash_types.h</itemPath>
@@ -101,9 +163,19 @@
         <logicalFolder name="CryptoAuthenticationLibrary"
                        displayName="CryptoAuthenticationLibrary"
                        projectFiles="true">
+          <logicalFolder name="atcacert" displayName="atcacert" projectFiles="true">
+          </logicalFolder>
+          <logicalFolder name="crypto" displayName="crypto" projectFiles="true">
+            <logicalFolder name="hashes" displayName="hashes" projectFiles="true">
+            </logicalFolder>
+          </logicalFolder>
           <logicalFolder name="hal" displayName="hal" projectFiles="true">
             <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/hal/atca_spi_hal.c</itemPath>
             <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/hal/hal_timer.c</itemPath>
+          </logicalFolder>
+          <logicalFolder name="host" displayName="host" projectFiles="true">
+          </logicalFolder>
+          <logicalFolder name="talib" displayName="talib" projectFiles="true">
           </logicalFolder>
           <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/atca_basic.c</itemPath>
           <itemPath>mcc_generated_files/CryptoAuthenticationLibrary/CryptoAuth_init.c</itemPath>
@@ -152,7 +224,7 @@
         <targetDevice>dsPIC33CK1024MP710</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>noID</platformTool>
+        <platformTool>pkob4hybrid</platformTool>
         <languageToolchain>XC16</languageToolchain>
         <languageToolchainVersion>2.10</languageToolchainVersion>
         <platform>3</platform>
@@ -188,6 +260,7 @@
         <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>
       </makeCustomizationType>
       <C30>
+        <property key="appendMe" value=""/>
         <property key="cast-align" value="false"/>
         <property key="code-model" value="default"/>
         <property key="const-model" value="default"/>
@@ -257,6 +330,8 @@
       </C30-CO>
       <C30-LD>
         <property key="additional-options-use-response-files" value="false"/>
+        <property key="appendMe"
+                  value="--add-flags-code=boot,--add-flags-const=boot,-D__USE_BFA"/>
         <property key="boot-eeprom" value="no_eeprom"/>
         <property key="boot-flash" value="no_flash"/>
         <property key="boot-ram" value="no_ram"/>
