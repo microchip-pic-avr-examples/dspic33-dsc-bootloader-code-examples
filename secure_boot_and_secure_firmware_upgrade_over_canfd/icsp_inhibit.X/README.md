@@ -43,8 +43,11 @@ All tool setup and programming instructions for the bootloader and application a
     ![COM Ports](./images/UBHA_COM_Ports.png)
     5. Unplug the micro-USB cable from port J1 and click the Refresh button in the Port Settings next to the COM Port dropdown.
     6. Click the COM Port dropdown and note which COM port is missing. This is the port that is being used by the device. 
-2. Run the application. Text should appear in the console indicating the ICSP inhibit application is running. 
-3. **!!NOTE: THE FOLLOWING WILL PERMANENTLY LOCK THE DEVICE, DISABLING PROGRAMMING AND DEBUGGING.** In all CAPS type, "LOCKDEVICE" and hit enter. Flash memory is not restricted and the board is locked from any programming or debugging.  
+2. Hit the MCLR button located in the middle of the board. Text should appear in the console indicating the ICSP inhibit application is running. <br>
+![MCLR Button](./images/MCLR_Button.png)
+![ICSP Program Start](./images/ICSP_Start_Screen.png)
+3. **!!NOTE: THE FOLLOWING WILL PERMANENTLY LOCK THE DEVICE, DISABLING PROGRAMMING AND DEBUGGING.** In all CAPS type, "LOCKDEVICE" and hit enter. Flash memory is not restricted and the board is locked from any programming or debugging. <br>
+![ICSP Locked](./images/ICSP_Lock.png)
 
 ## Trademarks
 
