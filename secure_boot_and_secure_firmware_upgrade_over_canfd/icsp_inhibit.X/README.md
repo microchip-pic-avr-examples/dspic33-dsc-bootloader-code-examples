@@ -12,7 +12,7 @@
 ---
 
 ## Introduction
-This project contains an application which, when programmed properly via the bootloader, prevents alteration of all Flash memory and **PERMANANTLEY** disables direct programming and debugging of the board. Once programmed, ICSP inhibit cannot be deactivated. 
+This project contains an application which, when programmed properly via the bootloader, prevents alteration of all Flash memory and **PERMANENTLY** disables direct programming and debugging of the board. Once programmed, ICSP inhibit cannot be deactivated. 
 
 All tool setup and programming instructions for the bootloader and application are the same as those used in boot.X and app.X, however the icsp_inhibit.X project will be used in place of app.X referenced in the README.md file in the top-level folder. For additional details on tool setup and how to run the demo, see the [README.md](../README.md) file in the top-level folder. 
 
