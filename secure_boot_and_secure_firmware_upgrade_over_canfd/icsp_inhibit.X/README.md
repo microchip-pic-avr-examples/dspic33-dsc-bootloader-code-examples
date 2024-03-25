@@ -12,7 +12,7 @@
 ---
 
 ## Introduction
-This project contains an application which, when programmed properly via the bootloader, **PERMANENTLY** locks Flash memory from any ICSP programming/erase operations. Once programmed, ICSP inhibit cannot be deactivated. 
+This project contains an application which, when programmed properly via the bootloader, **PERMANENTLY** locks Flash memory from any ICSP programming/erase operations. Once programmed, ICSP inhibit cannot be deactivated. See [icsp_inhibit.c](./icsp_inhibit.c) to view the code performing the lock. 
 
 All tool setup and programming instructions for the bootloader and application are the same as those used in boot.X and app.X, however the icsp_inhibit.X project will be used in place of app.X referenced in the README.md file in the top-level folder. For additional details on tool setup and how to run the demo, see the [README.md](../README.md) file in the top-level folder. 
 
