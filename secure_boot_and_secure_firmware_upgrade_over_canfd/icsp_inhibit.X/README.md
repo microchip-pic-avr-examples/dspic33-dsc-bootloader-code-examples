@@ -12,7 +12,7 @@
 ---
 
 ## Introduction
-This project contains an application which, when programmed properly via the bootloader, prevents alteration of all Flash memory and **PERMANENTLY** disables direct programming and debugging of the board. Once programmed, ICSP inhibit cannot be deactivated. 
+This project contains an application which, when programmed properly via the bootloader, **PERMANENTLY** locks Flash memory from any ICSP programming/erase operations. Once programmed, ICSP inhibit cannot be deactivated. 
 
 All tool setup and programming instructions for the bootloader and application are the same as those used in boot.X and app.X, however the icsp_inhibit.X project will be used in place of app.X referenced in the README.md file in the top-level folder. For additional details on tool setup and how to run the demo, see the [README.md](../README.md) file in the top-level folder. 
 
@@ -46,7 +46,7 @@ All tool setup and programming instructions for the bootloader and application a
 2. Hit the MCLR button located in the middle of the board. Text should appear in the console indicating the ICSP inhibit application is running. <br>
 ![MCLR Button](./images/MCLR_Button.png)<br>
 ![ICSP Program Start](./images/ICSP_Start_Screen.png)
-3. **!!NOTE: THE FOLLOWING WILL PERMANENTLY LOCK THE DEVICE, DISABLING PROGRAMMING AND DEBUGGING.** In all CAPS type, "LOCKDEVICE" and hit enter. Flash memory is not restricted and the board is locked from any programming or debugging. <br>
+3. **!!NOTE: THE FOLLOWING WILL PERMANENTLY LOCK THE DEVICE, DISABLING PROGRAMMING AND DEBUGGING.** In all CAPS type, "LOCKDEVICE" and hit enter. Flash memory is locked from any ICSP programming/erase operations. <br>
 ![ICSP Locked](./images/ICSP_Lock.png)
 
 ## Trademarks
