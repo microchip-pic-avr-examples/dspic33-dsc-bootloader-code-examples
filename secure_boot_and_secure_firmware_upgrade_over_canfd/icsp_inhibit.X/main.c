@@ -18,123 +18,194 @@
     EXCEED AMOUNT OF FEES, IF ANY, YOU PAID DIRECTLY TO MICROCHIP FOR 
     THIS SOFTWARE.
 */
+
+/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! WARNING !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
 #warning "!!RUNNING THIS PROGRAM AND FOLLOWING THE STEPS OUTLINED IN THE CONSOLE WILL PERMANENTLY DISABLE DIRECT PROGRAMMING OF THE BOARD. FOR ADDITIONAL INFORMATION, SEE THE README.MD INCLUDED WITH THIS PROJECT AND THE FAMILY DATA SHEET LOCATED AT https://ww1.microchip.com/downloads/aemDocuments/documents/MCU16/ProductDocuments/DataSheets/dsPIC33CK1024MP710-Family-Data-Sheet-DS70005496.pdf"
+
+#include "mcc_generated_files/flash/flash.h"
+#include "mcc_generated_files/flash/flash_types.h"
+#include "mcc_generated_files/boot/boot_config.h"
+#include "mcc_generated_files/uart/uart1.h"
+#include "mcc_generated_files/system/system.h"
+#include "icsp_inhibit.h"
+#include "terminal.h"
 
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
-#include "mcc_generated_files/flash/flash.h"
-#include "mcc_generated_files/flash/flash_types.h"
-#include "mcc_generated_files/boot/boot_config.h"
+#include <ctype.h>
 
-#define WINDOW_SIZE 10
+#define USER_INPUT_BUFFER_SIZE 50
 #define UNLOCK_COMMAND "LOCKDEVICE"
+#define STRCMP_MATCHES 0
+#define ENTER '\r'
+#define TERMINAL_LINE_ERROR 7
+#define TERMINAL_LINE_INPUT 5
+#define TERMINAL_LINE_HOME 1
 
 // Function prototypes
-static void ClearTerminalScreen(void);
-static void ClearTerminalLine(void);
-static void MoveCursor(int row);
-static void HideCursor(void);
 static void PrintWarning(void);
-static void AppendCharToWindow(char receivedChar, char *window, int *windowIndex);
-static void ProcessReceivedChar(char receivedChar, char *window, int *windowIndex);
-static void ResetWindowOnMismatch(char *window, int *windowIndex);
-static void CheckForUnlockCommand(char *window, int *windowIndex);
 static uint32_t GetResetAddress();
 static bool WasLoadedByBootloader();
+static void PrintBootloaderRequired(void);
+static char* ScanInput(void);
+static void PrintErrorMessage(char* error);
+static void PrintProgrammingDisabled(void);
+static void ClearUserInput(void);
+static void ClearErrorMessage(void);
+static void ResetPrompt(void);
+
+// Local Variables
+static char userInput[USER_INPUT_BUFFER_SIZE] = {0};
+static bool errorPresent = false;
 
 int main(void)
 {
-    char window[WINDOW_SIZE + 1] = {0};
-    int windowIndex = 0;
+    const char* keyword = "LOCKDEVICE";
 
     SYSTEM_Initialize();
-    ClearTerminalScreen();
-    PrintWarning();
-    while (1)
+    
+    if(WasLoadedByBootloader() == false)
     {
-        if (UART1_IsRxReady())
+        PrintBootloaderRequired();
+        
+        while(1)
         {
-            char receivedChar = UART1_Read();
-            ProcessReceivedChar(receivedChar, window, &windowIndex);
-            CheckForUnlockCommand(window, &windowIndex);
+        }
+    }
+    
+    if(ICSP_INHIBIT_IsEnabled())
+    {
+        PrintProgrammingDisabled();
+
+        while(1)
+        {
+        }
+    }
+            
+    PrintWarning();
+
+    while(1)
+    {
+        char* userInput = ScanInput();
+
+        if(strcmp(userInput, keyword) == STRCMP_MATCHES)
+        {
+            //ICSP_INHIBIT_Enable();        //Disable during development for safety
+
+            PrintProgrammingDisabled();
+
+            while(1)
+            {
+            }
+        }
+        else
+        {
+            PrintErrorMessage("Invalid keyword entered. Try again.");
         }
     }
 }
 
-static void ClearTerminalScreen(void)
+static char* ScanInput(void)
 {
-    printf("\033[2J");
+    uint8_t userInputOffset = 0;
+    char key;
+    
+    ClearUserInput();
+    
+    do
+    {     
+        key = UART1_Read();
+        
+        /* If there is still an error message after the first user key press,
+         * clear the error and reset the prompt before printing their input. */
+        if(errorPresent)
+        {
+            ClearErrorMessage();
+            ResetPrompt();
+        }
+        
+        if(isalnum(key) && (userInputOffset < sizeof(userInput)))
+        {
+            userInput[userInputOffset++] = key;
+            printf("%c", key);
+        }
+    }
+    while(key != ENTER);
+
+    return userInput;
 }
 
-static void ClearTerminalLine(void)
+static void PrintProgrammingDisabled(void)
 {
-    printf("\33[2K\r");
+    TERMINAL_EnableCursor(false);
+    TERMINAL_MoveCursor(TERMINAL_LINE_HOME);
+    TERMINAL_ClearScreen();
+            
+    printf("\r\n");
+    printf("\r\n");
+    printf("\r\n");
+    printf("*** ICSP Programming/Debugging permanently disabled. ***\r\n");
+    printf("\r\n");
+    printf("Use the bootloader to load all future applications into this board.");
 }
 
-static void MoveCursor(int row)
+static void ClearErrorMessage(void)
 {
-    printf("\033[%d;0f", row);
+    TERMINAL_MoveCursor(TERMINAL_LINE_ERROR);
+    TERMINAL_ClearLine();
+        
+    errorPresent = false;
 }
 
-static void HideCursor(void)
+static void ResetPrompt(void)
 {
-    printf("\033[?25l");
+    TERMINAL_MoveCursor(TERMINAL_LINE_INPUT);
+    TERMINAL_ClearLine();
+    printf(">> ");
+}
+
+static void PrintErrorMessage(char* errorMessage)
+{
+    ClearErrorMessage();
+    
+    printf("%s", errorMessage);
+    errorPresent = true;
+    
+    ResetPrompt();
+}
+
+static void ClearUserInput(void)
+{
+    memset(userInput, 0, sizeof(userInput));
 }
 
 static void PrintWarning(void)
 {
-    MoveCursor(1);
-    printf("Type LOCKDEVICE to enable the ICSP Inhibit feature.");
-    MoveCursor(3);
-    printf("WARNING: THIS PERMANENTLY DISABLES DIRECT PROGRAMMING OF THE BOARD.");
-}
-
-static void ProcessReceivedChar(char receivedChar, char *window, int *windowIndex)
-{
-    bool isCharValid = (*windowIndex < strlen(UNLOCK_COMMAND)) && (receivedChar == UNLOCK_COMMAND[*windowIndex]);
+    TERMINAL_EnableCursor(false);
+    TERMINAL_MoveCursor(TERMINAL_LINE_HOME);
+    TERMINAL_ClearScreen();
     
-    if (isCharValid)
-    {
-        AppendCharToWindow(receivedChar, window, windowIndex);
-        MoveCursor(10);
-        printf("%s", window);
-    }
-    else
-    {
-        ResetWindowOnMismatch(window, windowIndex);
-    }
+    printf("Type LOCKDEVICE (plus ENTER) to enable the ICSP Inhibit feature.\r\n");
+    printf("\r\n");
+    printf("WARNING: THIS PERMANENTLY DISABLES DIRECT PROGRAMMING OF THE BOARD.\r\n");
+    printf("\r\n");
+    printf(">> ");
+    
+    TERMINAL_EnableCursor(true);
 }
 
-static void AppendCharToWindow(char receivedChar, char *window, int *windowIndex)
+static void PrintBootloaderRequired(void)
 {
-    window[(*windowIndex)++] = receivedChar;
-    window[*windowIndex] = '\0';
-}
-
-static void ResetWindowOnMismatch(char *window, int *windowIndex)
-{
-    MoveCursor(10);
-    ClearTerminalLine();
-    MoveCursor(5);
-    ClearTerminalLine();
-    printf("Invalid character entered. Try again.");
-    *windowIndex = 0;
-    memset(window, 0, WINDOW_SIZE + 1); 
-}
-
-static void CheckForUnlockCommand(char *window, int *windowIndex)
-{
-    if (strncmp(window, UNLOCK_COMMAND, *windowIndex) == 0 && *windowIndex == strlen(UNLOCK_COMMAND))
-    {
-        MoveCursor(5);
-        ClearTerminalLine();
-        printf("ICSP Programming/Debugging permanently disabled. \n");
-        MoveCursor(10);
-        ClearTerminalLine();
-        *windowIndex = 0;
-        memset(window, 0, WINDOW_SIZE + 1);
-    }
+    TERMINAL_EnableCursor(false);
+    TERMINAL_MoveCursor(TERMINAL_LINE_HOME);
+    TERMINAL_ClearScreen();
+    
+    printf("NO BOOTLOADER DETECTED!\r\n");
+    printf("\r\n");
+    printf("Because programming will be permanently disabled, \r\n");
+    printf("a bootloader is required to run this demo. \r\n");
+    printf("Please see the readme.md for more information.\r\n");
 }
 
 /* The following code finds the address used by GOTO instruction programmed 

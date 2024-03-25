@@ -9,6 +9,7 @@
 *.ko
 *.obj
 *.elf
+*.yml
 
 # Excluding documentation output directories
 #docs/
