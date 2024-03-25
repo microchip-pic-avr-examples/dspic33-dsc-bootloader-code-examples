@@ -74,7 +74,7 @@
 #pragma config BISTDIS = DISABLED    //Memory BIST Feature Disable->mBIST on reset feature disabled
 
 // FICD
-#pragma config ICS = PGD1    //ICD Communication Channel Select bits->Communicate on PGC1 and PGD1
+#pragma config ICS = PGD3    //ICD Communication Channel Select bits->Communicate on PGC3 and PGD3
 #pragma config JTAGEN = OFF    //JTAG Enable bit->JTAG is disabled
 #pragma config NOBTSWP = DISABLED    //BOOTSWP instruction disable bit->BOOTSWP instruction is disabled
 
