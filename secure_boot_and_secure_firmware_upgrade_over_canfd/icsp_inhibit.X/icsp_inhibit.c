@@ -20,16 +20,28 @@
 */
 
 #include <stdbool.h>
+#include "mcc_generated_files/flash/flash.h"
+#include "mcc_generated_files/flash/flash_types.h"
 
-static bool icspEnabled = false;
+static flash_data_t inhibitKeys[4] = 
+{
+    0x00006D63UL, 0x00000000UL, 0x00006870UL, 0x00000000UL
+};
 
-//temp stubs - replace with real implementation
 bool ICSP_INHIBIT_IsEnabled(void)
 {
-    return icspEnabled;
+    static flash_data_t dataInFlash[4];
+    FLASH_Read(0x801034, 4, dataInFlash);
+    
+    if(memcmp(inhibitKeys, dataInFlash, sizeof(inhibitKeys)) == 0)
+    {
+        return true;
+    }
+    return false;
 }
 
-bool ICSP_INHIBIT_Enable()
+void ICSP_INHIBIT_Enable()
 {
-    icspEnabled = true;
+    FLASH_WordWrite(0x801034, &inhibitKeys[0], FLASH_UNLOCK_KEY);
+    FLASH_WordWrite(0x801038, &inhibitKeys[2], FLASH_UNLOCK_KEY); 
 }

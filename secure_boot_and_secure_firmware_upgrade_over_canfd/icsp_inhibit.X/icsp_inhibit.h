@@ -25,6 +25,6 @@
 #include <stdbool.h>
 
 bool ICSP_INHIBIT_IsEnabled(void);
-bool ICSP_INHIBIT_Enable(void);
+void ICSP_INHIBIT_Enable(void);
 
 #endif

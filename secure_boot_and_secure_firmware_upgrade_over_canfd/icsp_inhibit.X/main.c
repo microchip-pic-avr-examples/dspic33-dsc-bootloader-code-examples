@@ -62,7 +62,6 @@ static bool errorPresent = false;
 int main(void)
 {
     const char* keyword = "LOCKDEVICE";
-
     SYSTEM_Initialize();
     
     if(WasLoadedByBootloader() == false)

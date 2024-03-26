@@ -358,6 +358,8 @@
                   value="${memories.instruction.ram.ranges}"/>
         <property key="memories.programmemory" value="true"/>
         <property key="memories.programmemory.ranges" value="0-afeff"/>
+        <property key="programmerToGoFilePath"
+                  value="C:/work/repos/dspic33-dsc-bootloader-code-examples/secure_boot_and_secure_firmware_upgrade_over_canfd/icsp_inhibit.X/debug/default/icsp_inhibit_ptg"/>
         <property key="programoptions.donoteraseauxmem" value="false"/>
         <property key="programoptions.eraseb4program" value="true"/>
         <property key="programoptions.pgmentry.voltage" value="low"/>
