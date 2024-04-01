@@ -33,7 +33,7 @@ static flash_data_t inhibitKeys[4] =
 
 bool ICSP_INHIBIT_IsEnabled(void)
 {
-    static const flash_data_t dataInFlash[4];
+    static flash_data_t dataInFlash[4];
     FLASH_Read(0x801034, 4, dataInFlash);
     
     if(memcmp(inhibitKeys, dataInFlash, sizeof(inhibitKeys)) == 0)

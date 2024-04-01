@@ -20,6 +20,7 @@
 */
 
 #include <stdbool.h>
+#include <stdio.h>
 
 void TERMINAL_ClearScreen(void)
 {
