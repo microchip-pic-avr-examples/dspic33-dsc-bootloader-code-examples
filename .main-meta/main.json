@@ -35,7 +35,39 @@
          }
       },
       "keywords": [
-         "GPIO"
+         "GPIO",
+         "Secure Bootloader",
+         "Secure Firmware Upgrade",
+         "Bootloader",
+         "CAN FD",
+         "Immutable Boot",
+         "CodeGuard Security",
+         "Firmware Upgrade",
+         "Security",
+         "Cryptography",
+         "Public-key Cryptography",
+         "CryptoAuthentication",
+         "Authentication",
+         "Microchip Device Firmware Update",
+         "Certificate",
+         "SHA",
+         "SHA-256",
+         "Public Key",
+         "HSM",
+         "Getting Started",
+         "MCC",
+         "XC16",
+         "XC-DSC",
+         "Private Key",
+         "Code Protection",
+         "TA100",
+         "dsPIC",
+         "DSC",
+         "Over-the-Air Upgrade",
+         "Automotive",
+         "Hardware Security Module",
+         "Flash OTP",
+         "One-Time Programmable"
       ]
    }
 }
