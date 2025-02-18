@@ -85,6 +85,7 @@ pipeline {
         stage('Build') {
             steps {
                 script {  
+                    sh("find . -type f -name postBuild.sh -exec chmod +x {} \\;")
                     mplabxProjectBuild(
                         sourceFilePath: "${env.MPLABX_PROJECT_SOURCE}"
                     )
