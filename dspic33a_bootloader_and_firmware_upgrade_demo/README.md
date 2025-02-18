@@ -24,7 +24,6 @@ The associated bootloader and application projects demonstrate the following:
 * Application verification checking using a 32-bit CRC-32Q signature.
 
 ## Related Documentation
-* [16bit MCC Bootloader](https://www.microchip.com/16-bit-bootloader)
 * [dsPIC33AK128MC106 DIM (EV02G02A)](https://www.microchip.com/en-us/development-tool/ev02g02a)
 * [dsPIC33A Curiosity Platform Development Board (EV74H48A)](https://www.microchip.com/en-us/development-tool/ev74h48a)
 * [MDFU Protocol](https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SupportingCollateral/Microchip-Device-Firmware-Update-MDFU-Protocol-DS50003743.pdf)
