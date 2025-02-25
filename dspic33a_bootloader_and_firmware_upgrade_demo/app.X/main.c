@@ -33,7 +33,6 @@
     Main application
 */
 
-
 void TMR1_TimeoutCallback()
 {
     LED7_Toggle();
