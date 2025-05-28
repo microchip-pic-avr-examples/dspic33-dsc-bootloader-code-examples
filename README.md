@@ -25,15 +25,29 @@ See [secure_boot_and_secure_firmware_upgrade_over_canfd](secure_boot_and_secure_
 ## <u>dsPIC33a Bootloader and Firmware Upgrade Demo</u>
 
 ### Summary
-An example bootloader using the Microchip Device Firmware Update (MDFU) protocol and UART peripheral on the dsPIC33A Curiosity Platform Development Board with a dsPIC33AK128MC106 DIM demonstrating the following: 
+An example bootloader using the Microchip Device Firmware Update (MDFU) protocol and UART peripheral on the Curiosity Platform Development Board with a dsPIC33AK128MC106 DIM demonstrating the following: 
 * Secure firmware update via UART using Microchip Device Firmware Update (MDFU) protocol 
 * Application verification checking using a 32-bit CRC-32Q signature  
 
 ### Related Documentation
 * [dsPIC33AK128MC106 DIM (EV02G02A)](https://www.microchip.com/en-us/development-tool/ev02g02a)
-* [dsPIC33A Curiosity Platform Development Board (EV74H48A)](https://www.microchip.com/en-us/development-tool/ev74h48a)
+* [Curiosity Platform Development Board (EV74H48A)](https://www.microchip.com/en-us/development-tool/ev74h48a)
 * [MDFU Protocol](https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SupportingCollateral/Microchip-Device-Firmware-Update-MDFU-Protocol-DS50003743.pdf)
 
 ### Setup And Operation
 See [dspic33a_bootloader_and_firmware_upgrade_demo](dspic33a_bootloader_and_firmware_upgrade_demo/) and the associated [README.md](dspic33a_bootloader_and_firmware_upgrade_demo/README.md) files for details on the required hardware, software, setup, and how to run the demo.
+
+## <u>dsPIC33a Secure Boot and Firmware Upgrade Demo</u>
+
+### Summary
+An example secure bootloader using the Microchip Device Firmware Update (MDFU) protocol and UART peripheral on the Curiosity Platform Development Board with a dsPIC33AK512MPS512 DIM demonstrating the following: 
+* Secure firmware update via UART using Microchip Device Firmware Update (MDFU) protocol 
+* Application verification checking using Elliptic Curve Digital Signature Algorithm (ECDSA) with P-384
+
+### Related Documentation
+* [Curiosity Platform Development Board (EV74H48A)](https://www.microchip.com/en-us/development-tool/ev74h48a)
+* [MDFU Protocol](https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SupportingCollateral/Microchip-Device-Firmware-Update-MDFU-Protocol-DS50003743.pdf)
+
+### Setup And Operation
+See [dspic33a_secure_boot_and_secure_firmware_upgrade_demo](dspic33a_secure_boot_and_secure_firmware_upgrade_demo/) and the associated [README.md](dspic33a_secure_boot_and_secure_firmware_upgrade_demo/README.md) files for details on the required hardware, software, setup, and how to run the demo.
 

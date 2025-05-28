@@ -1,0 +1,99 @@
+{
+   "metaDataVersion": "1.0.0",
+   "category": "com.microchip.ide.project",
+   "content": {
+      "metaDataVersion": "1.3.0",
+      "name": "com.microchip.mplabx.project.dspic33a-secure-boot-and-secure-firmware-upgrade-demo",
+      "version": "1.0.0",
+      "displayName": "dsPIC33a Secure Boot and Secure Firmware Upgrade Demo",
+      "projectName": "dspic33a-secure-boot-and-secure-firmware-upgrade-demo",
+      "shortDescription": "This MPLAB® X IDE example demonstrates how to perform secure boot authentication and secure firmware upgrade via UART with Microchip Device Firmware Update Protocol (M-DFU) and ECDSA with P-384 verification within MCC Melody.",
+      "ide": {
+         "name": "MPLABX",
+         "semverRange": ">=6.25.0"
+      },
+      "compiler": {
+         "name": "XCDSC",
+         "semverRange": "^3.21"
+      },
+      "dfp": {
+         "name": "dsPIC33AK-MP_DFP",
+         "semverRange": ">=1.0.81"
+      },
+      "configurator": {
+         "name": "MCC",
+         "semverRange": ">=5.7.1"
+      },
+      "device": {
+         "metaDataVersion": "1.0.0",
+         "category": "com.microchip.portal.contentRef",
+         "content": {
+            "metaDataVersion": "1.0.0",
+            "category": "com.microchip.device",
+            "name": " dsPIC33AK512MPS512",
+            "versionRange": "*"
+         }
+      },
+      "keywords": [
+         "Application Layer",
+         "Authentication",
+         "Automotive",
+         "Board",
+         "Bootloader",
+         "Bootloader Client", 
+         "CAN FD",
+         "Certificate",
+         "Code Protection",
+         "Communication",
+         "Communication Layer",
+         "Communication Module",
+         "Compiler",
+         "Configurator",
+         "Controller",
+         "CryptoAuthentication",
+         "Cryptographic Accelerator Module",
+         "Cryptographic Standard",
+         "Cryptography",
+         "Curiosity",
+         "Development Tool",
+         "Documentation",
+         "DSC",
+         "DSP",
+         "dsPIC",
+         "Firmware",
+         "Firmware Upgrade",
+         "Flash OTP",
+         "FTP",
+         "Getting Started",
+         "Immutable Boot",
+         "Key",
+         "MCC",
+         "MDFU",
+         "Memory",
+         "Memory Module",
+         "Memory Type",
+         "Module",
+         "MPLAB XC Compiler",
+         "OTP",
+         "Over-the-Air Upgrade",
+         "Private Key",
+         "Product",
+         "Public Key",
+         "Public-key Cryptography",
+         "Secure Bootloader",
+         "Secure Firmware Upgrade",
+         "Security",
+         "Security Device",
+         "Serial Communication",
+         "SHA",
+         "SHA-256",
+         "Software",
+         "UART",
+         "UART Protocol", 
+         "Virtual COM Port",
+         "Wired",
+         "XC16",
+         "XC-DSC"
+      ]
+   }
+}
