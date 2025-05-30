@@ -57,7 +57,7 @@ REM ====================================
 Set reset=[0m
 Set cyan=[46m
 Set red=[41m
-Set private_key_path="..\..\..\boot.X\mdfu\keystore\private_key.pem"
+Set private_key_path="..\..\boot.X\mdfu\keystore\private_key.pem"
 
 REM Jump to start of the script logic
 goto scriptStart
