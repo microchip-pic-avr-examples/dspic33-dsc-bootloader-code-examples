@@ -53,6 +53,18 @@
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
                    projectFiles="true">
+      <logicalFolder name="f2" displayName="postbuild" projectFiles="true">
+        <itemPath>mdfu/asndecode.py</itemPath>
+        <itemPath>mdfu/bin_tool.py</itemPath>
+        <itemPath>mdfu/postBuild.bat</itemPath>
+        <itemPath>mdfu/postBuild.sh</itemPath>
+        <itemPath>mdfu/signing_tool.py</itemPath>
+        <itemPath>mdfu/update_header_value.py</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f1" displayName="prebuild" projectFiles="true">
+        <itemPath>mdfu/preBuild.bat</itemPath>
+        <itemPath>mdfu/preBuild.sh</itemPath>
+      </logicalFolder>
       <itemPath>Makefile</itemPath>
       <itemPath>keystoreReadFlashProtection.mc3</itemPath>
     </logicalFolder>
@@ -78,16 +90,6 @@
         <itemPath>bsp/s3.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f3" displayName="MCC Generated Files" projectFiles="true">
-        <logicalFolder name="f1" displayName="boot" projectFiles="true">
-          <logicalFolder name="f1" displayName="src" projectFiles="true">
-            <itemPath>mcc_generated_files/boot/asndecode.py</itemPath>
-            <itemPath>mcc_generated_files/boot/bin_tool.py</itemPath>
-            <itemPath>mcc_generated_files/boot/postBuild.bat</itemPath>
-            <itemPath>mcc_generated_files/boot/postBuild.sh</itemPath>
-            <itemPath>mcc_generated_files/boot/signing_tool.py</itemPath>
-            <itemPath>mcc_generated_files/boot/update_header_value.py</itemPath>
-          </logicalFolder>
-        </logicalFolder>
         <logicalFolder name="f2" displayName="flash" projectFiles="true">
           <logicalFolder name="f1" displayName="src" projectFiles="true">
             <itemPath>mcc_generated_files/flash/src/flash.c</itemPath>
@@ -160,9 +162,9 @@
       <makeCustomizationType>
         <makeCustomizationPreStepEnabled>true</makeCustomizationPreStepEnabled>
         <makeUseCleanTarget>false</makeUseCleanTarget>
-        <makeCustomizationPreStep>cd ..${_/_}..${_/_}..${_/_}boot.X${_/_}mdfu &amp;&amp; .${_/_}preBuild${ShExtension}</makeCustomizationPreStep>
+        <makeCustomizationPreStep>cd mdfu &amp;&amp; .${_/_}preBuild${ShExtension}</makeCustomizationPreStep>
         <makeCustomizationPostStepEnabled>true</makeCustomizationPostStepEnabled>
-        <makeCustomizationPostStep>cd mcc_generated_files${_/_}boot &amp;&amp; .${_/_}postBuild$(ShExtension) $(MP_CC_DIR) ${ProjectDir} ${ImageDir} ${ImageName} ${IsDebug} &amp;&amp; cd ${ProjectDir} &amp;&amp; cd ${ImageDir}</makeCustomizationPostStep>
+        <makeCustomizationPostStep>cd mdfu &amp;&amp; .${_/_}postBuild$(ShExtension) $(MP_CC_DIR) ${ProjectDir} ${ImageDir} ${ImageName} ${IsDebug} &amp;&amp; cd ${ProjectDir} &amp;&amp; cd ${ImageDir}</makeCustomizationPostStep>
         <makeCustomizationPutChecksumInUserID>false</makeCustomizationPutChecksumInUserID>
         <makeCustomizationEnableLongLines>false</makeCustomizationEnableLongLines>
         <makeCustomizationNormalizeHexFile>false</makeCustomizationNormalizeHexFile>
