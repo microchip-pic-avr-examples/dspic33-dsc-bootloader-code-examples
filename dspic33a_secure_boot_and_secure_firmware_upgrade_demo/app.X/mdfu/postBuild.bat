@@ -57,7 +57,7 @@ REM ====================================
 Set reset=[0m
 Set cyan=[46m
 Set red=[41m
-Set private_key_path="..\..\..\..\..\boot.X\mdfu\keystore\private_key.pem"
+Set private_key_path="..\..\boot.X\mdfu\keystore\private_key.pem"
 
 REM Jump to start of the script logic
 goto scriptStart
@@ -103,7 +103,7 @@ REM
 REM Description: Prints out a message with RED background that an error has occurred processing and signing the header and exits the script.
 REM ------------------------------------
 :Error
-echo %red% An error has occurred. The application header stuffing and signing process did not complete. %reset%
+echo %red% An error has occurred. The executable header stuffing and signing process did not complete. %reset%
 del "%projectDir%\%imageDir%\signed_image.bin"
 exit /b -1
 
@@ -134,7 +134,7 @@ if EXIST %compilerDir%\xc-dsc-objcopy.exe (
 Set OBJ_CPY=%compilerDir%\xc-dsc-objcopy.exe
 )
 
-REM Fill in unimplemented memory locations in the application space 
+REM Fill in unimplemented memory locations in the executable space 
 hexmate r80B000-0x844FFF,"%projectDir%\%imageDir%\%imageName%" -O"%projectDir%\%imageDir%\filled.hex" -FILL=w1:0x00@0x80B000:0x844FFF || goto Error
 
 REM generate a .hex file for just the header (offset to address 0)
@@ -158,18 +158,18 @@ REM Generate the binary file of the header
 echo ..............................
 echo Hashing image data
 echo ..............................
-REM Hash the application code
+REM Hash the executable code
 openssl dgst -sha384 "%projectDir%\%imageDir%\data.bin" || goto Error
 openssl dgst -sha384 -binary -out "%projectDir%\%imageDir%\data.hash.bin" "%projectDir%\%imageDir%\data.bin" || goto Error
 
-REM inject the code digest into the application header
+REM inject the code digest into the executable header
 python update_header_value.py update_header_value --header_bin "%projectDir%\%imageDir%\header.bin" --type_code 0x3 --value_bin "%projectDir%\%imageDir%\data.hash.bin" || goto Error
 echo.
 
 echo ..............................
 echo Generating signature for image header
 echo ..............................
-REM Sign application header binary file
+REM Sign executable header binary file
 openssl dgst -sha384 "%projectDir%\%imageDir%\header.bin" || goto Error
 openssl dgst -sha384 -sign %private_key_path% -out "%projectDir%\%imageDir%\signature.der" "%projectDir%\%imageDir%\header.bin" || goto Error
 

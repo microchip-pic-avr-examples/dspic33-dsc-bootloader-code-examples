@@ -1,7 +1,10 @@
 import os
 import subprocess
 
-keystore_directory = "keystore"
+script_path = os.path.dirname(os.path.realpath(__file__))
+keystore_directory_name = "keystore"
+keystore_directory = os.path.join(script_path, keystore_directory_name)
+
 keystore_file = "keystore.json"
 keystore_path = os.path.join(keystore_directory, keystore_file)
 
