@@ -1,3 +1,10 @@
+# dsPIC33 DSC Bootloader Code Examples v1.2.1
+### Release Highlights
+* Corrected version number of "dspic33a Secure Boot and Secure Firmware Upgrade Demo".
+
+### Features Added\Updated
+* Corrected version number of "dspic33a Secure Boot and Secure Firmware Upgrade Demo".
+
 # dsPIC33 DSC Bootloader Code Examples v1.2.0
 ### Release Highlights
 * Initial Release of "dspic33a Secure Boot and Secure Firmware Upgrade Demo" - MDFU based secure bootloader for the dsPIC33A family of devices with a single partition verified by ECDSA with P-384.*
