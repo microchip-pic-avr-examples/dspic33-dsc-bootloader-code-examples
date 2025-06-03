@@ -52,4 +52,4 @@ openssl version || MissingOpenSSL
 # If all required tools are present, create the required key/keystore files 
 
 # Creates the keystore and demo key pair if not already present 
-python3 ../../../../boot.X/mdfu/create_demo_key_files.py || Error
+python3 ../../../boot.X/mdfu/create_demo_key_files.py || Error

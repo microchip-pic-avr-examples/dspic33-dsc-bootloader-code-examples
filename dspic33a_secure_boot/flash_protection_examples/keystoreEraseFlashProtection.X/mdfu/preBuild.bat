@@ -53,4 +53,4 @@ openssl version || goto MissingOpenSSL
 REM If all required tools are present, create the required key/keystore files 
 
 REM Creates the keystore and demo key pair if not already present 
-python ..\..\..\..\boot.X\mdfu\create_demo_key_files.py || goto Error
+python ..\..\..\boot.X\mdfu\create_demo_key_files.py || goto Error

@@ -12,9 +12,6 @@ import traceback
 import argparse
 import subprocess
 
-# Add a system path for import as the asndecode script is shared.
-sys.path.append("..\\..\\..")
-
 def file_exists(filename):
     if os.path.isfile(filename):
         return True

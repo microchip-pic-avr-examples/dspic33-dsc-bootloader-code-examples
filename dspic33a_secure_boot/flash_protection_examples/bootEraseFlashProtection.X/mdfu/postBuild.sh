@@ -55,7 +55,7 @@ export isDebug="$5"
 export reset="[0m"
 export cyan="[46m"
 export red="[41m"
-export private_key_path="../../../../boot.X/mdfu/keystore/private_key.pem"
+export private_key_path="../../../boot.X/mdfu/keystore/private_key.pem"
 
 # ====================================
 # Functions

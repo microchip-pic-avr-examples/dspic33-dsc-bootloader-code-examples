@@ -9,9 +9,6 @@ import traceback
 import argparse
 import asndecode
 
-# Add a system path for import as the asndecode script is shared.
-sys.path.append("..")
-
 def console_print(quiet, msg):
     if quiet is False:
         print(msg)
