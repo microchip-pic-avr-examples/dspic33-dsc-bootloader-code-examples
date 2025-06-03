@@ -13,7 +13,7 @@
 ---
 
 ![Board picture](./images/board.jpg)<br>
-_Figure 1. - Curiosity Platform Development Board_<br><br>
+_Figure 1. - dsPIC33A Curiosity Platform Development Board_<br><br>
 
 ![DIM picture](./images/dim.jpg)<br>
 _Figure 2. - dsPIC33AK512MPS512 Curiosity GP DIM_<br><br>
@@ -42,13 +42,13 @@ The associated bootloader and application projects demonstrate the following:
 
 ### Hardware
 * [dsPIC33AK512MPS512 DIM (EV80L65A)](https://www.microchip.com/EV80L65A)
-* [Curiosity Platform Development Board (EV74H48A)](https://www.microchip.com/en-us/development-tool/ev74h48a)
+* [dsPIC33A Curiosity Platform Development Board (EV74H48A)](https://www.microchip.com/en-us/development-tool/ev74h48a)
 * A USB-Type C cable (for powering the board)
 
 ## Running the Demo
 
 ### Hardware Setup
-1. Insert the dsPIC33AK512MPS512 Curiosity GP Dim into the Curiosity DIM Connector.
+1. Insert the dsPIC33AK512MPS512 Curiosity GP Dim into the dsPIC33A Curiosity DIM Connector.
 2. Connect the USB-C cable to connector J24 of the Development Board to the host computer.
 
 ### Programming the Bootloader
@@ -516,7 +516,7 @@ Additional example application projects are included in this demo under the flas
 
 ### Flash Region Erase Examples
 
-The examples within the flash_region_erase folder are intended to verify that an IRT region cannot be erased by non-IRT code and that the boot, executable, and keystore sections are locked to modification. By modifying the boot loader code, developers can verify that if these regions are not switched to "locked until next reset" or are not IRT enabled regions, they can be unlocked and modified. 
+The examples projects listed below are intended to verify that an IRT region cannot be erased by non-IRT code and that the boot, executable, and keystore sections are locked to modification. By modifying the boot loader code, developers can verify that if these regions are not switched to "locked until next reset" or are not IRT enabled regions, they can be unlocked and modified. These projects can be found in the flash_protection_examples folder.
 
 * bootEraseFlashProtection.X & keystoreEraseFlashProtection.X
     * Unlocks the region and erases a page from it.
@@ -544,7 +544,7 @@ Given the FIRT_IRT bit has been set and the projects are loaded via the firmware
 
 ### Flash Region Read Examples
 
-The examples within the flash_region_read folder are intended to verify that an IRT region cannot be read by non-IRT code. 
+The examples projects below are intended to verify that an IRT region cannot be read by non-IRT code. They are located in the flash_protection_examples folder.
 
 * bootReadFlashProtection.X & keystoreReadFlashProtection.X
     * Reads an instruction within the region.
@@ -564,7 +564,7 @@ Given the FIRT_IRT bit has been set and the projects are loaded via the firmware
 
 ### Flash Region Execute Example
 
-The example within the flash_region_execute folder is intended to verify that the IRT regions are fully protected and non-IRT user space cannot access IRT code.
+The example project below is intended to verify that the IRT regions are fully protected and non-IRT user space cannot access IRT code.  It is located in the flash_protection_examples folder.
 
 * bootExecuteFlashProtection.X
     * Jumps to an address in the IRT boot region from non-IRT user space.
