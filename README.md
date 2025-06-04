@@ -49,5 +49,5 @@ An example secure bootloader using the Microchip Device Firmware Update (MDFU) p
 * [MDFU Protocol](https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SupportingCollateral/Microchip-Device-Firmware-Update-MDFU-Protocol-DS50003743.pdf)
 
 ### Setup And Operation
-See [dspic33a_secure_boot_and_secure_firmware_upgrade_demo](dspic33a_secure_boot_and_secure_firmware_upgrade_demo/) and the associated [README.md](dspic33a_secure_boot_and_secure_firmware_upgrade_demo/README.md) files for details on the required hardware, software, setup, and how to run the demo.
+See [dspic33a_secure_boot](dspic33a_secure_boot/) and the associated [README.md](dspic33a_secure_boot/README.md) files for details on the required hardware, software, setup, and how to run the demo.
 
