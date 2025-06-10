@@ -30,7 +30,7 @@
          "content": {
             "metaDataVersion": "1.0.0",
             "category": "com.microchip.device",
-            "name": " dsPIC33AK128MC106",
+            "name": "dsPIC33AK128MC106",
             "versionRange": "*"
          }
       },
