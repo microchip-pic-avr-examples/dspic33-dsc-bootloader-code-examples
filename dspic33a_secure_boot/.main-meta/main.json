@@ -30,7 +30,7 @@
          "content": {
             "metaDataVersion": "1.0.0",
             "category": "com.microchip.device",
-            "name": " dsPIC33AK512MPS512",
+            "name": "dsPIC33AK512MPS512",
             "versionRange": "*"
          }
       },
