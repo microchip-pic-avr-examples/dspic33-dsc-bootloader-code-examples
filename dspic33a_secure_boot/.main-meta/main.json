@@ -4,7 +4,7 @@
    "content": {
       "metaDataVersion": "1.3.0",
       "name": "com.microchip.mplabx.project.dspic33a-secure-boot-and-secure-firmware-upgrade-demo",
-      "version": "1.2.1",
+      "version": "1.2.2",
       "displayName": "dsPIC33a Secure Boot and Secure Firmware Upgrade Demo",
       "projectName": "dspic33a-secure-boot-and-secure-firmware-upgrade-demo",
       "shortDescription": "This MPLAB® X IDE example demonstrates how to perform secure boot authentication and secure firmware upgrade via UART with Microchip Device Firmware Update Protocol (M-DFU) and ECDSA with P-384 verification within MCC Melody.",
@@ -30,7 +30,7 @@
          "content": {
             "metaDataVersion": "1.0.0",
             "category": "com.microchip.device",
-            "name": " dsPIC33AK512MPS512",
+            "name": "dsPIC33AK512MPS512",
             "versionRange": "*"
          }
       },

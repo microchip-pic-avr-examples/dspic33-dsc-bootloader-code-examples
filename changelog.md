@@ -1,3 +1,12 @@
+# dsPIC33 DSC Bootloader Code Examples v1.2.2
+### Release Highlights
+* Updated Clock PLIB version from v1.1.0 to v1.1.2 in "dspic33a_bootloader_and_firmware_upgrade_demo".
+* Removed invalid space from the device name in the "dspic33a_bootloader_and_firmware_upgrade_demo" and "dspic33a_secure_boot" main.json files.
+
+### Features Added\Updated
+* Updated Clock PLIB version from v1.1.0 to v1.1.2 in "dspic33a_bootloader_and_firmware_upgrade_demo".
+* Removed invalid space from the device name in the "dspic33a_bootloader_and_firmware_upgrade_demo" and "dspic33a_secure_boot" main.json files.
+
 # dsPIC33 DSC Bootloader Code Examples v1.2.1
 ### Release Highlights
 * Corrected version number of "dspic33a Secure Boot and Secure Firmware Upgrade Demo".
