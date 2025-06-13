@@ -292,6 +292,11 @@
         <property key="relaxed-math" value="false"/>
         <property key="save-temps" value="false"/>
       </C30Global>
+      <Tool>
+        <property key="memories.programmemory.ranges" value="800000-81ffff"/>
+        <property key="programmerToGoFilePath"
+                  value="C:/work/repos/bootloader16/src/main/firmware_examples/mdfu/crc32/boot.X/debug/default/boot_ptg"/>
+      </Tool>
       <pkob4hybrid>
         <property key="memories.programmemory.ranges" value="800000-81ffff"/>
         <property key="programmerToGoFilePath"
