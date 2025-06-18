@@ -1,9 +1,9 @@
 # dsPIC33 DSC Bootloader Code Examples v1.2.3
 ### Release Highlights
-* Updated instances of "dsPIC33a" to "dspic33A".
+* Updated instances of "dsPIC33a" to "dsPIC33A".
 
 ### Features Added\Updated
-* Updated instances of "dsPIC33a" to "dspic33A".
+* Updated instances of "dsPIC33a" to "dsPIC33A".
 
 # dsPIC33 DSC Bootloader Code Examples v1.2.2
 ### Release Highlights
