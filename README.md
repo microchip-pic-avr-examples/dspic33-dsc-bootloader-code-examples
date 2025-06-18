@@ -22,7 +22,7 @@ An example bootloader using the 16-bit MCC bootloader and the CAN or CAN-FD peri
 ### Setup And Operation
 See [secure_boot_and_secure_firmware_upgrade_over_canfd](secure_boot_and_secure_firmware_upgrade_over_canfd/) and the associated [README.md](secure_boot_and_secure_firmware_upgrade_over_canfd/README.md) files for details on the required hardware, software, setup, and how to run the demo. 
 
-## <u>dsPIC33a Bootloader and Firmware Upgrade Demo</u>
+## <u>dsPIC33A Bootloader and Firmware Upgrade Demo</u>
 
 ### Summary
 An example bootloader using the Microchip Device Firmware Update (MDFU) protocol and UART peripheral on the Curiosity Platform Development Board with a dsPIC33AK128MC106 DIM demonstrating the following: 
@@ -37,7 +37,7 @@ An example bootloader using the Microchip Device Firmware Update (MDFU) protocol
 ### Setup And Operation
 See [dspic33a_bootloader_and_firmware_upgrade_demo](dspic33a_bootloader_and_firmware_upgrade_demo/) and the associated [README.md](dspic33a_bootloader_and_firmware_upgrade_demo/README.md) files for details on the required hardware, software, setup, and how to run the demo.
 
-## <u>dsPIC33a Secure Boot and Firmware Upgrade Demo</u>
+## <u>dsPIC33A Secure Boot and Firmware Upgrade Demo</u>
 
 ### Summary
 An example secure bootloader using the Microchip Device Firmware Update (MDFU) protocol and UART peripheral on the Curiosity Platform Development Board with a dsPIC33AK512MPS512 DIM demonstrating the following: 
