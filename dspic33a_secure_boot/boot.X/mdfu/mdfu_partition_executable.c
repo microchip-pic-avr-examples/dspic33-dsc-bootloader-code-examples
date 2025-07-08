@@ -236,7 +236,12 @@ static enum MDFU_PARTITION_STATUS Run(void)
      *  there is no way to create an object at that address to references so
      *  an integer address is used for the pre-defined executable entry point.
      */
-    void (*user_executable)(void) = (void(*)(void))MDFU_CONFIG_EXECUTABLE_DATA_ORIGIN;
+    int (*user_executable)(void);
+    
+    uint32_t *resetVectorPtr = (uint32_t *)MDFU_CONFIG_EXECUTABLE_DATA_ORIGIN;
+    uint32_t resetVector = *resetVectorPtr;
+
+    user_executable = (int(*)(void))resetVector;
     
      /* Disable IRT access before transferring control to the executable.
       * 

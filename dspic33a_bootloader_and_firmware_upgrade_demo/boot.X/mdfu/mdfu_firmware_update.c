@@ -102,6 +102,9 @@ void MDFU_FirmwareUpdateStartApplication(void)
     IVTBASE = MDFU_CONFIG_APPLICATION_RESET_ADDRESS;
     PACCON1bits.IVTBASEWR = 0;
     
-    user_application = (int(*)(void))MDFU_CONFIG_APPLICATION_RESET_ADDRESS;
-    user_application();  
+    uint32_t *resetVectorPtr = (uint32_t *)MDFU_CONFIG_APPLICATION_RESET_ADDRESS;
+    uint32_t resetVector = *resetVectorPtr;
+
+    user_application = (int(*)(void))resetVector;
+    user_application();
 }
