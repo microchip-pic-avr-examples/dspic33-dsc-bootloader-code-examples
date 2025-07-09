@@ -93,18 +93,34 @@ bool MDFU_FirmwareUpdateVerifyImage(void)
 }
 
 void MDFU_FirmwareUpdateStartApplication(void)
-{
-    int (*user_application)(void);
-    
+{   
     /* This is probably being replaced at some point by __builtin__setIVTBASE() but is not currently supported */
     /* This also assumes that the first block of memory in the application is the reset/ivt table which may not always be true if there is an application header */
     PACCON1bits.IVTBASEWR = 1;
     IVTBASE = MDFU_CONFIG_APPLICATION_RESET_ADDRESS;
     PACCON1bits.IVTBASEWR = 0;
     
-    uint32_t *resetVectorPtr = (uint32_t *)MDFU_CONFIG_APPLICATION_RESET_ADDRESS;
-    uint32_t resetVector = *resetVectorPtr;
-
-    user_application = (int(*)(void))resetVector;
-    user_application();
+    /* cppcheck-suppress misra-c2012-11.4
+     * 
+     *  (Rule 11.4) ADVISORY: A conversion should not be performed between a
+     *  pointer to object and an integer type
+     * 
+     *  Reasoning: This is required for the bootloader to jump to the application 
+     *  code. The reset vector is stored at a fixed address, and this cast is 
+     *  necessary to read it.
+     */
+    uint32_t resetVector = *((const uint32_t *)MDFU_CONFIG_APPLICATION_RESET_ADDRESS);
+    
+    /* cppcheck-suppress misra-c2012-11.4
+     * 
+     *  (Rule 11.4) ADVISORY: A conversion should not be performed between a
+     *  pointer to object and an integer type
+     * 
+     *  Reasoning: This is required for the bootloader to jump to the application 
+     *  code. The application entry point is stored in the reset vector and must 
+     *  be cast to a function pointer.
+     */
+    int (*user_application)(void) = (int (*)(void))resetVector;
+    
+    (void)user_application();
 }

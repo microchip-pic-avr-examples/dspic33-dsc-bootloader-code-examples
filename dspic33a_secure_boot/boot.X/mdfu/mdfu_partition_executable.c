@@ -243,7 +243,7 @@ static enum MDFU_PARTITION_STATUS Run(void)
      *  pointer to object and an integer type
      * 
      *  Reasoning: This is required for the bootloader to jump to the executable 
-     *  code. The application entry point is stored in the reset vector and must 
+     *  code. The executable entry point is stored in the reset vector and must 
      *  be cast to a function pointer.
      */
     int (*user_executable)(void) = (int (*)(void))resetVector;
