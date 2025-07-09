@@ -226,22 +226,27 @@ static enum MDFU_PARTITION_STATUS Run(void)
     IVTBASE = MDFU_CONFIG_EXECUTABLE_DATA_ORIGIN;
     PACCON1bits.IVTBASEWR = 0;
     
-    /* cppcheck-suppress misra-c2012-11.6
+    /* cppcheck-suppress misra-c2012-11.4
      * 
-     *  (Rule 11.6) REQUIRED: Required: A cast shall not be performed between 
-     *  pointer to void and an arithmetic type
+     *  (Rule 11.4) ADVISORY: A conversion should not be performed between a
+     *  pointer to object and an integer type
      * 
-     *  Reasoning: This function represents a jump between the boot code and the
-     *  user code. Because the address of the jump lives outside of boot space,
-     *  there is no way to create an object at that address to references so
-     *  an integer address is used for the pre-defined executable entry point.
+     *  Reasoning: This is required for the bootloader to jump to the executable 
+     *  code. The reset vector is stored at a fixed address, and this cast is 
+     *  necessary to read it.
      */
-    int (*user_executable)(void);
+    uint32_t resetVector = *((const uint32_t *)MDFU_CONFIG_EXECUTABLE_DATA_ORIGIN);
     
-    uint32_t *resetVectorPtr = (uint32_t *)MDFU_CONFIG_EXECUTABLE_DATA_ORIGIN;
-    uint32_t resetVector = *resetVectorPtr;
-
-    user_executable = (int(*)(void))resetVector;
+    /* cppcheck-suppress misra-c2012-11.4
+     * 
+     *  (Rule 11.4) ADVISORY: A conversion should not be performed between a
+     *  pointer to object and an integer type
+     * 
+     *  Reasoning: This is required for the bootloader to jump to the executable 
+     *  code. The application entry point is stored in the reset vector and must 
+     *  be cast to a function pointer.
+     */
+    int (*user_executable)(void) = (int (*)(void))resetVector;
     
      /* Disable IRT access before transferring control to the executable.
       * 
@@ -251,7 +256,8 @@ static enum MDFU_PARTITION_STATUS Run(void)
       * executable non-IRT sections. The keystore, although classified as IRT, is 
       * non-executable and thus serves as the recommended buffer. */
     IRTCTRLbits.DONE = 1U;
-    user_executable();  
+    
+    (void)user_executable();  
     
     return MDFU_PARTITION_STATUS_OPERATION_FAILED;
 }
