@@ -94,33 +94,26 @@ bool MDFU_FirmwareUpdateVerifyImage(void)
 
 void MDFU_FirmwareUpdateStartApplication(void)
 {   
+    /* 
+     * Declare a file-scoped, constant, volatile function pointer named 
+     * 'user_application'. This pointer is set to the program memory (flash) 
+     * address defined by MDFU_CONFIG_APPLICATION_RESET_ADDRESS, which is the 
+     * entry point (reset vector) of the user application.
+     * The 'space(prog)' attribute specifies that the pointer refers to program 
+     * memory (flash), not data memory (RAM).
+     * The 'noload' attribute instructs the linker not to initialize this 
+     * variable at startup.
+     * 
+     * By calling 'user_application()', the bootloader transfers execution to the 
+     * user application.
+     */
+    static void (* volatile const user_application)(void) __attribute__((address(MDFU_CONFIG_APPLICATION_RESET_ADDRESS), space(prog), noload));
+    
     /* This is probably being replaced at some point by __builtin__setIVTBASE() but is not currently supported */
     /* This also assumes that the first block of memory in the application is the reset/ivt table which may not always be true if there is an application header */
     PACCON1bits.IVTBASEWR = 1;
     IVTBASE = MDFU_CONFIG_APPLICATION_RESET_ADDRESS;
     PACCON1bits.IVTBASEWR = 0;
     
-    /* cppcheck-suppress misra-c2012-11.4
-     * 
-     *  (Rule 11.4) ADVISORY: A conversion should not be performed between a
-     *  pointer to object and an integer type
-     * 
-     *  Reasoning: This is required for the bootloader to jump to the application 
-     *  code. The reset vector is stored at a fixed address, and this cast is 
-     *  necessary to read it.
-     */
-    uint32_t resetVector = *((const uint32_t *)MDFU_CONFIG_APPLICATION_RESET_ADDRESS);
-    
-    /* cppcheck-suppress misra-c2012-11.4
-     * 
-     *  (Rule 11.4) ADVISORY: A conversion should not be performed between a
-     *  pointer to object and an integer type
-     * 
-     *  Reasoning: This is required for the bootloader to jump to the application 
-     *  code. The application entry point is stored in the reset vector and must 
-     *  be cast to a function pointer.
-     */
-    int (*user_application)(void) = (int (*)(void))resetVector;
-    
-    (void)user_application();
+    user_application();
 }

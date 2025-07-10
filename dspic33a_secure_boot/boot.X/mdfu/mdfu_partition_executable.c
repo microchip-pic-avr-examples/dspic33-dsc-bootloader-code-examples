@@ -210,7 +210,7 @@ static void CacheInvalidate(void)
 */
 static enum MDFU_PARTITION_STATUS Run(void)
 {    
-     /* NOTE: Before starting the executable, all interrupts used
+    /* NOTE: Before starting the executable, all interrupts used
     * by the bootloader must be disabled. Add code here to return
     * the peripherals/interrupts to the reset state before starting
     * the executable code. */
@@ -226,27 +226,20 @@ static enum MDFU_PARTITION_STATUS Run(void)
     IVTBASE = MDFU_CONFIG_EXECUTABLE_DATA_ORIGIN;
     PACCON1bits.IVTBASEWR = 0;
     
-    /* cppcheck-suppress misra-c2012-11.4
+    /* 
+     * Declare a file-scoped, constant, volatile function pointer named 
+     * 'user_executable'. This pointer is set to the program memory (flash) 
+     * address defined by MDFU_CONFIG_EXECUTABLE_DATA_ORIGIN, which is the entry 
+     * point of the executable partition.
+     * The 'space(prog)' attribute specifies that the pointer refers to program 
+     * memory (flash), not data memory (RAM).
+     * The 'noload' attribute instructs the linker not to initialize this 
+     * variable at startup.
      * 
-     *  (Rule 11.4) ADVISORY: A conversion should not be performed between a
-     *  pointer to object and an integer type
-     * 
-     *  Reasoning: This is required for the bootloader to jump to the executable 
-     *  code. The reset vector is stored at a fixed address, and this cast is 
-     *  necessary to read it.
+     * By calling 'user_executable()', the bootloader transfers execution to the 
+     * user application.
      */
-    uint32_t resetVector = *((const uint32_t *)MDFU_CONFIG_EXECUTABLE_DATA_ORIGIN);
-    
-    /* cppcheck-suppress misra-c2012-11.4
-     * 
-     *  (Rule 11.4) ADVISORY: A conversion should not be performed between a
-     *  pointer to object and an integer type
-     * 
-     *  Reasoning: This is required for the bootloader to jump to the executable 
-     *  code. The executable entry point is stored in the reset vector and must 
-     *  be cast to a function pointer.
-     */
-    int (*user_executable)(void) = (int (*)(void))resetVector;
+    static void (* volatile const user_executable)(void) __attribute__((address(MDFU_CONFIG_EXECUTABLE_DATA_ORIGIN), space(prog), noload));
     
      /* Disable IRT access before transferring control to the executable.
       * 
@@ -256,8 +249,7 @@ static enum MDFU_PARTITION_STATUS Run(void)
       * executable non-IRT sections. The keystore, although classified as IRT, is 
       * non-executable and thus serves as the recommended buffer. */
     IRTCTRLbits.DONE = 1U;
-    
-    (void)user_executable();  
+    user_executable();  
     
     return MDFU_PARTITION_STATUS_OPERATION_FAILED;
 }
