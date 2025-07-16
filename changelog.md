@@ -1,3 +1,10 @@
+# dsPIC33 DSC Bootloader Code Examples v1.2.4
+### Release Highlights
+* Corrected application/executable entry address in dspic33a_bootloader_and_firmware_upgrade_demo and dspic33a_secure_boot.
+
+### Features Added\Updated
+* Corrected application/executable entry address in dspic33a_bootloader_and_firmware_upgrade_demo and dspic33a_secure_boot.
+
 # dsPIC33 DSC Bootloader Code Examples v1.2.3
 ### Release Highlights
 * Updated instances of "dsPIC33a" to "dsPIC33A".

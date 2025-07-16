@@ -93,8 +93,21 @@ bool MDFU_FirmwareUpdateVerifyImage(void)
 }
 
 void MDFU_FirmwareUpdateStartApplication(void)
-{
-    int (*user_application)(void);
+{   
+    /* 
+     * Declare a file-scoped, constant, volatile function pointer named 
+     * 'user_application'. This pointer is set to the program memory (flash) 
+     * address defined by MDFU_CONFIG_APPLICATION_RESET_ADDRESS, which is the 
+     * entry point (reset vector) of the user application.
+     * The 'space(prog)' attribute specifies that the pointer refers to program 
+     * memory (flash), not data memory (RAM).
+     * The 'noload' attribute instructs the linker not to initialize this 
+     * variable at startup.
+     * 
+     * By calling 'user_application()', the bootloader transfers execution to the 
+     * user application.
+     */
+    static void (* volatile const user_application)(void) __attribute__((address(MDFU_CONFIG_APPLICATION_RESET_ADDRESS), space(prog), noload));
     
     /* This is probably being replaced at some point by __builtin__setIVTBASE() but is not currently supported */
     /* This also assumes that the first block of memory in the application is the reset/ivt table which may not always be true if there is an application header */
@@ -102,6 +115,5 @@ void MDFU_FirmwareUpdateStartApplication(void)
     IVTBASE = MDFU_CONFIG_APPLICATION_RESET_ADDRESS;
     PACCON1bits.IVTBASEWR = 0;
     
-    user_application = (int(*)(void))MDFU_CONFIG_APPLICATION_RESET_ADDRESS;
-    user_application();  
+    user_application();
 }

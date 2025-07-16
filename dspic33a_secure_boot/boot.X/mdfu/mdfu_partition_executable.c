@@ -210,7 +210,7 @@ static void CacheInvalidate(void)
 */
 static enum MDFU_PARTITION_STATUS Run(void)
 {    
-     /* NOTE: Before starting the executable, all interrupts used
+    /* NOTE: Before starting the executable, all interrupts used
     * by the bootloader must be disabled. Add code here to return
     * the peripherals/interrupts to the reset state before starting
     * the executable code. */
@@ -226,17 +226,20 @@ static enum MDFU_PARTITION_STATUS Run(void)
     IVTBASE = MDFU_CONFIG_EXECUTABLE_DATA_ORIGIN;
     PACCON1bits.IVTBASEWR = 0;
     
-    /* cppcheck-suppress misra-c2012-11.6
+    /* 
+     * Declare a file-scoped, constant, volatile function pointer named 
+     * 'user_executable'. This pointer is set to the program memory (flash) 
+     * address defined by MDFU_CONFIG_EXECUTABLE_DATA_ORIGIN, which is the entry 
+     * point of the executable partition.
+     * The 'space(prog)' attribute specifies that the pointer refers to program 
+     * memory (flash), not data memory (RAM).
+     * The 'noload' attribute instructs the linker not to initialize this 
+     * variable at startup.
      * 
-     *  (Rule 11.6) REQUIRED: Required: A cast shall not be performed between 
-     *  pointer to void and an arithmetic type
-     * 
-     *  Reasoning: This function represents a jump between the boot code and the
-     *  user code. Because the address of the jump lives outside of boot space,
-     *  there is no way to create an object at that address to references so
-     *  an integer address is used for the pre-defined executable entry point.
+     * By calling 'user_executable()', the bootloader transfers execution to the 
+     * user application.
      */
-    void (*user_executable)(void) = (void(*)(void))MDFU_CONFIG_EXECUTABLE_DATA_ORIGIN;
+    static void (* volatile const user_executable)(void) __attribute__((address(MDFU_CONFIG_EXECUTABLE_DATA_ORIGIN), space(prog), noload));
     
      /* Disable IRT access before transferring control to the executable.
       * 
