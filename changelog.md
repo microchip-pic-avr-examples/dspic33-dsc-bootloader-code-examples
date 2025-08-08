@@ -1,3 +1,10 @@
+# dsPIC33 DSC Bootloader Code Examples v1.2.5
+### Release Highlights
+* Removed invalid mode change in dspic33a_secure_boot demo.
+
+### Features Added\Updated
+* Removed invalid mode change in dspic33a_secure_boot demo.
+
 # dsPIC33 DSC Bootloader Code Examples v1.2.4
 ### Release Highlights
 * Corrected application/executable entry address in dspic33a_bootloader_and_firmware_upgrade_demo and dspic33a_secure_boot.

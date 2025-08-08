@@ -153,8 +153,8 @@ void MDFU_BootDemoTasks(void)
             if(executable.modeChange(MDFU_PARTITION_MODE_READ & MDFU_PARTITION_MODE_WRITE) == MDFU_PARTITION_STATUS_SUCCESS)
             {
                 executable.copy(&download); 
-                /* Make the executable partition readable and locked to prevent self writes. */
-                if (executable.modeChange(MDFU_PARTITION_MODE_READ & MDFU_PARTITION_MODE_LOCKED) != MDFU_PARTITION_STATUS_SUCCESS)
+                /* Make the executable partition readable to prevent self writes. */
+                if (executable.modeChange(MDFU_PARTITION_MODE_READ) != MDFU_PARTITION_STATUS_SUCCESS)
                 {
                     Reset();
                 }

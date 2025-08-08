@@ -276,6 +276,11 @@ static enum MDFU_PARTITION_STATUS ModeChange(enum MDFU_PARTITION_MODE mode)
         enum FLASH_REGION_PERMISSION permissions = (FLASH_REGION_PERMISSION_EXECUTION_ENABLED & FLASH_REGION_PERMISSION_READ_ENABLED);
         status = flashRegion2.permissionsSet(permissions, true) ? MDFU_PARTITION_STATUS_SUCCESS : MDFU_PARTITION_STATUS_LOCKED;
     }
+    else if (mode == (enum MDFU_PARTITION_MODE)(MDFU_PARTITION_MODE_READ))
+    {
+        enum FLASH_REGION_PERMISSION permissions = (FLASH_REGION_PERMISSION_READ_ENABLED);
+        status = flashRegion2.permissionsSet(permissions, false) ? MDFU_PARTITION_STATUS_SUCCESS : MDFU_PARTITION_STATUS_LOCKED;
+    }
     else
     {
     }
