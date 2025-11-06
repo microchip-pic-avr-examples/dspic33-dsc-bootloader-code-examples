@@ -30,4 +30,4 @@ An example bootloader using the 16-bit MCC bootloader and the CAN or CAN-FD peri
 See [secure_boot_and_secure_firmware_upgrade_over_canfd](secure_boot_and_secure_firmware_upgrade_over_canfd/) and the associated [README.md](secure_boot_and_secure_firmware_upgrade_over_canfd/README.md) files for details on the required hardware, software, setup, and how to run the demo. 
 
 # Trademark
-MPLAB is a register trademark of Microchip Technology Inc.
+MPLAB is a registered trademark of Microchip Technology Inc.
