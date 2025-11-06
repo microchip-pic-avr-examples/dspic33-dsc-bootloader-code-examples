@@ -1,3 +1,10 @@
+# dsPIC33 DSC Bootloader Code Examples v1.2.6
+### Release Highlights
+* dspic33a_secure_boot and dspic33a_bootloader_and_firmware_upgrade_demo moved to [dspic-bootloader-mdfu repository](https://github.com/microchip-pic-avr-examples/dspic-bootloader-mdfu).
+
+### Features Added\Updated
+* dspic33a_secure_boot and dspic33a_bootloader_and_firmware_upgrade_demo moved to [dspic-bootloader-mdfu repository](https://github.com/microchip-pic-avr-examples/dspic-bootloader-mdfu)..
+
 # dsPIC33 DSC Bootloader Code Examples v1.2.5
 ### Release Highlights
 * Removed invalid mode change in dspic33a_secure_boot demo.
