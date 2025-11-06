@@ -4,12 +4,19 @@
     <img alt="Microchip Logo." src="images/microchip_logo_black_red.png">
 </picture>
 
+# Overview
+This repository covers boot loading and firmware update solutions using the Universal Host Bootloading Application (UBHA) protocol/tool. For many dsPIC devices, this is supported through the MPLAB(R) Code Configurator (MCC). MCC can be used to generate code examples for various supported devices and provide customization and configuration options not present in the examples on this site. 
+
+NOTE: For dsPIC33A family boot loading and firmware update solutions, refer to [dspic-bootloader-mdfu repository](https://github.com/microchip-pic-avr-examples/dspic-bootloader-mdfu).
+
+NOTE: For dsPIC Microchip Device Firmware Update (MDFU) based solutions, refer to [dspic-bootloader-mdfu repository](https://github.com/microchip-pic-avr-examples/dspic-bootloader-mdfu).
+
 ## <u>dsPIC33 CAN/CAN-FD Bootloader Demo</u>
 
 ### Summary
 An example bootloader using the 16-bit MCC bootloader and the CAN or CAN-FD peripheral on the dsPIC33 Touch CAN LIN Curiosity Development board demonstrating the following: 
 * Immutable secure boot via CodeGuard
-* A/B type bootloading with Flash partitioning to support two firmware images and anti-roll back
+* A/B type boot loading with Flash partitioning to support two firmware images and anti-roll back
 * Secure boot authentication via ECDSA signature verification
 * Secure firmware update via CAN-FD
 * Crypto acceleration via TA100
@@ -22,32 +29,5 @@ An example bootloader using the 16-bit MCC bootloader and the CAN or CAN-FD peri
 ### Setup And Operation
 See [secure_boot_and_secure_firmware_upgrade_over_canfd](secure_boot_and_secure_firmware_upgrade_over_canfd/) and the associated [README.md](secure_boot_and_secure_firmware_upgrade_over_canfd/README.md) files for details on the required hardware, software, setup, and how to run the demo. 
 
-## <u>dsPIC33A Bootloader and Firmware Upgrade Demo</u>
-
-### Summary
-An example bootloader using the Microchip Device Firmware Update (MDFU) protocol and UART peripheral on the Curiosity Platform Development Board with a dsPIC33AK128MC106 DIM demonstrating the following: 
-* Secure firmware update via UART using Microchip Device Firmware Update (MDFU) protocol 
-* Application verification checking using a 32-bit CRC-32Q signature  
-
-### Related Documentation
-* [dsPIC33AK128MC106 DIM (EV02G02A)](https://www.microchip.com/en-us/development-tool/ev02g02a)
-* [Curiosity Platform Development Board (EV74H48A)](https://www.microchip.com/en-us/development-tool/ev74h48a)
-* [MDFU Protocol](https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SupportingCollateral/Microchip-Device-Firmware-Update-MDFU-Protocol-DS50003743.pdf)
-
-### Setup And Operation
-See [dspic33a_bootloader_and_firmware_upgrade_demo](dspic33a_bootloader_and_firmware_upgrade_demo/) and the associated [README.md](dspic33a_bootloader_and_firmware_upgrade_demo/README.md) files for details on the required hardware, software, setup, and how to run the demo.
-
-## <u>dsPIC33A Secure Boot and Firmware Upgrade Demo</u>
-
-### Summary
-An example secure bootloader using the Microchip Device Firmware Update (MDFU) protocol and UART peripheral on the Curiosity Platform Development Board with a dsPIC33AK512MPS512 DIM demonstrating the following: 
-* Secure firmware update via UART using Microchip Device Firmware Update (MDFU) protocol 
-* Application verification checking using Elliptic Curve Digital Signature Algorithm (ECDSA) with P-384
-
-### Related Documentation
-* [Curiosity Platform Development Board (EV74H48A)](https://www.microchip.com/en-us/development-tool/ev74h48a)
-* [MDFU Protocol](https://ww1.microchip.com/downloads/aemDocuments/documents/DEV/ProductDocuments/SupportingCollateral/Microchip-Device-Firmware-Update-MDFU-Protocol-DS50003743.pdf)
-
-### Setup And Operation
-See [dspic33a_secure_boot](dspic33a_secure_boot/) and the associated [README.md](dspic33a_secure_boot/README.md) files for details on the required hardware, software, setup, and how to run the demo.
-
+# Trademark
+MPLAB is a registered trademark of Microchip Technology Inc.
